@@ -1,3 +1,18 @@
-.test{
-    color: blue;
+@use "./variables.scss" as *;
+
+*, *::before, *::after{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root{
+ --Primary-color: #5291C5; // Usar en cajas, botones, iconos, titulos y elementos principales
+ --Secondary-color: #BBD5E4; // Usar en fondos, bordes, elementos secundarios
+ --Tertiary-color: #040B59;  // Usar en textos principales, iconos principales
+ --Quaternary-color: #06033B;  // Usar en fondos oscuros, barras de navegación
+ --Quinary-color: #A3AED0; // Usar en textos secundarios, iconos secundarios
+ --Negative-color: #EF5E61; // Usar en alertas, errores, mensajes negativos
+ --Positiive-color: #4BB543; // Usar en mensajes de éxito, confirmaciones
+ --Background-gradient: linear-gradient(135deg, #CFE0E9 100%, #5291C5 73%); // Usar en fondos principales
 }
