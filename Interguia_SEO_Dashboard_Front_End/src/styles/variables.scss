@@ -1,0 +1,14 @@
+$screen-small-414: 414px; // iPhone 6/7/8 Plus
+$screen-small-360: 360px; // small Android phones
+$screen-small-375: 376px; // iPhone X, 11 Pro, 12 Mini, 13 Mini
+$screen-small: 480px; // small phones / older mobiles
+$screen-small-690: 690px;
+$screen-tablet: 811px;
+$screen-medium: 990px; //tablets, small screens
+$screen-medium-large: 1281px; // tablets landscape, small laptops
+$screen-large: 1536px; //typical laptops
+$screen-xl: 1920px; // Huge screen and above
+
+$screen-small-footer: 790px;
+
+$transition-duration: all 0.3s cubic-bezier(0.32, -0.01, 0.57, 0.95);
