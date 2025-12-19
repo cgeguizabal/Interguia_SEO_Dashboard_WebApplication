@@ -5,7 +5,7 @@ function App() {
  
 
   return (
-   <h1>INTERGUIA SEO DASHBOARD</h1>
+   <h1 className='test'>INTERGUIA SEO DASHBOARD</h1>
   )
 }
 
