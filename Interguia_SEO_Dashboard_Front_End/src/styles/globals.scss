@@ -16,3 +16,15 @@
  --Positiive-color: #4BB543; // Usar en mensajes de éxito, confirmaciones
  --Background-gradient: linear-gradient(135deg, #CFE0E9 100%, #5291C5 73%); // Usar en fondos principales
 }
+
+html{
+    font-size: 62.5%; // 1rem = 10px
+    scroll-behavior: smooth;
+
+    min-height: 100vh;
+}
+
+body{
+    font-family: 'Roboto', sans-serif;
+    color: var(--Primary-color);
+}
