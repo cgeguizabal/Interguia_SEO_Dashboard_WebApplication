@@ -1,0 +1,66 @@
+.coverImage {
+  grid-column: 1 / 7;
+
+  background-image: url(../../assets/images/Cover_Login.png);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+
+  &_container {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &_image {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.inputForm {
+  grid-column: 7 / 10;
+  justify-self: center;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  flex-direction: column;
+
+  &_header {
+    display: flex;
+    justify-content: center;
+  }
+
+  &_logo {
+    width: 60%;
+
+    &_image {
+      width: 100%;
+    }
+  }
+}
+
+.databaseConfigButton {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  margin-top: 2rem;
+  font-size: 1.5rem;
+  color: var(--Primary-color);
+  background: none;
+  border: none;
+  text-decoration: underline;
+  cursor: pointer;
+
+  position: absolute;
+  bottom: 2rem;
+  right: 2rem;
+
+  &:hover {
+    color: var(--Tertiary-color);
+  }
+}

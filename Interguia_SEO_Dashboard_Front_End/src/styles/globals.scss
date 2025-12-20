@@ -1,30 +1,51 @@
 @use "./variables.scss" as *;
 
-*, *::before, *::after{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-:root{
- --Primary-color: #5291C5; // Usar en cajas, botones, iconos, titulos y elementos principales
- --Secondary-color: #BBD5E4; // Usar en fondos, bordes, elementos secundarios
- --Tertiary-color: #040B59;  // Usar en textos principales, iconos principales
- --Quaternary-color: #06033B;  // Usar en fondos oscuros, barras de navegación
- --Quinary-color: #A3AED0; // Usar en textos secundarios, iconos secundarios
- --Negative-color: #EF5E61; // Usar en alertas, errores, mensajes negativos
- --Positiive-color: #4BB543; // Usar en mensajes de éxito, confirmaciones
- --Background-gradient: linear-gradient(135deg, #CFE0E9 100%, #5291C5 73%); // Usar en fondos principales
+:root {
+  --Primary-color: #5291c5; // Usar en cajas, botones, iconos, titulos y elementos principales
+  --Secondary-color: #bbd5e4; // Usar en fondos, bordes, elementos secundarios
+  --Tertiary-color: #040b59; // Usar en textos principales, iconos principales
+  --Quaternary-color: #06033b; // Usar en fondos oscuros, barras de navegación
+  --Quinary-color: #a3aed0; // Usar en textos secundarios, iconos secundarios
+  --Negative-color: #ef5e61; // Usar en alertas, errores, mensajes negativos
+  --Positiive-color: #4bb543; // Usar en mensajes de éxito, confirmaciones
+  --Background-gradient: linear-gradient(
+    135deg,
+    #cfe0e9 100%,
+    #5291c5 73%
+  ); // Usar en fondos principales
 }
 
-html{
-    font-size: 62.5%; // 1rem = 10px
-    scroll-behavior: smooth;
+html {
+  font-size: 62.5%; // 1rem = 10px
+  scroll-behavior: smooth;
 
-    min-height: 100vh;
+  min-height: 100vh;
 }
 
-body{
-    font-family: 'Roboto', sans-serif;
-    color: var(--Primary-color);
+body {
+  font-family: "Roboto", sans-serif;
+  color: var(--Primary-color);
+}
+
+.grid-container_auto_rows {
+  display: grid;
+
+  gap: 2rem;
+  margin: 0 auto;
+  min-height: 100vh;
+
+  grid-template-columns:
+    [full-start] minmax(6rem, 1fr)
+    [center-start] repeat(8, [col-start] minmax(8rem, 17rem) [col-end])
+    [center-end] minmax(6rem, 1fr) [full-end];
+
+  grid-template-rows: auto;
 }
