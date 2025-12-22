@@ -7,11 +7,11 @@ function LoginForm() {
     <form className={LoginFormStyle.container}>
       <div className={LoginFormStyle.inputGroup}>
         {" "}
-        <h5 className={LoginFormStyle.inputGroup_label}>Correo Email</h5>{" "}
+        <label className={LoginFormStyle.inputGroup_label}>Correo Email</label>{" "}
         <input className={LoginFormStyle.inputGroup_input} type="text" />
       </div>
       <div className={LoginFormStyle.inputGroup}>
-        <h5 className={LoginFormStyle.inputGroup_label}>Contraseña</h5>{" "}
+        <label className={LoginFormStyle.inputGroup_label}>Contraseña</label>{" "}
         <input className={LoginFormStyle.inputGroup_input} type="password" />
       </div>
       <label className={LoginFormStyle.keepMeLoggedIn}>

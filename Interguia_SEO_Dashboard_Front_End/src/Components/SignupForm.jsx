@@ -6,15 +6,15 @@ function SignupForm() {
     <form className={SignupFormStyle.container}>
       <div className={SignupFormStyle.inputGroup}>
         {" "}
-        <h5 className={SignupFormStyle.inputGroup_label}>Correo Email</h5>{" "}
+        <label className={SignupFormStyle.inputGroup_label}>Correo Email</label>{" "}
         <input className={SignupFormStyle.inputGroup_input} type="text" />
       </div>
       <div className={SignupFormStyle.inputGroup}>
-        <h5 className={SignupFormStyle.inputGroup_label}>Contraseña</h5>{" "}
+        <label className={SignupFormStyle.inputGroup_label}>Contraseña</label>{" "}
         <input className={SignupFormStyle.inputGroup_input} type="password" />
       </div>
       <div className={SignupFormStyle.inputGroup}>
-        <h5 className={SignupFormStyle.inputGroup_label}>Confirmar Contraseña</h5>{" "}
+        <label className={SignupFormStyle.inputGroup_label}>Confirmar Contraseña</label>{" "}
         <input className={SignupFormStyle.inputGroup_input} type="password" />
       </div>
       

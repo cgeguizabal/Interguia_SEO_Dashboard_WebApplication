@@ -5,11 +5,11 @@ export default function AdminLoginForm() {
     <form className={AdminLoginFormStyle.container}>
           <div className={AdminLoginFormStyle.inputGroup}>
             {" "}
-            <h5 className={AdminLoginFormStyle.inputGroup_label}>Correo Email</h5>{" "}
+            <label className={AdminLoginFormStyle.inputGroup_label}>Correo Email</label>{" "}
             <input className={AdminLoginFormStyle.inputGroup_input} type="text" />
           </div>
           <div className={AdminLoginFormStyle.inputGroup}>
-            <h5 className={AdminLoginFormStyle.inputGroup_label}>Contraseña</h5>{" "}
+            <label className={AdminLoginFormStyle.inputGroup_label}>Contraseña</label>{" "}
             <input className={AdminLoginFormStyle.inputGroup_input} type="password" />
           </div>
           
