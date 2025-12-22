@@ -3,6 +3,7 @@ import "./App.css";
 
 import LoginPage from "./pages/LoginPage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
+import AdminLoginPage from "./pages/AdminLoginPage.jsx";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Routes>
         <Route path="/Login" element={<LoginPage />} />
         <Route path="/Signup" element={<SignupPage />} />
+        <Route path="/AdminLogin" element={<AdminLoginPage />} />
       </Routes>
     </main>
   );

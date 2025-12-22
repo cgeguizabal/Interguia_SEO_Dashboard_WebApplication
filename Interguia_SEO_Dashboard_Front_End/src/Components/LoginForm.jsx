@@ -1,4 +1,6 @@
+import { Link } from "react-router-dom";
 import LoginFormStyle from "../styles/components/LoginForm.module.scss";
+
 
 function LoginForm() {
   return (
@@ -22,9 +24,9 @@ function LoginForm() {
         Mantenme conectado
       </label>
       <button className={LoginFormStyle.loginButton}>Iniciar Sesion</button>
-      <a href="#" className={LoginFormStyle.createAccount}>
+      <Link to="/Signup" className={LoginFormStyle.createAccount}>
         <h3>Crear Cuenta</h3>
-      </a>
+      </Link>
     </form>
   );
 }
