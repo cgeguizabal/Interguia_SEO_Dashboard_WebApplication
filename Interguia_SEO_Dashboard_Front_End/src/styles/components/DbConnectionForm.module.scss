@@ -1,0 +1,82 @@
+@use '../variables.scss' as *;
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 3rem;
+  width: 40rem; // Ajustar el ancho segun el diseno de width de .inputForm
+
+  align-self: center;
+
+  margin-top: 3.5rem;
+}
+
+.inputGroup {
+  
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  &_label {
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--Tertiary-color);
+  }
+&_select{
+      padding: 1.2rem 1.6rem;
+     font-family: $font-primary;
+    font-size: 1.4rem;
+    background-color: var(--Secondary-color);
+    color: var(--Tertiary-color);
+    font-weight: 600;
+    border: 1px solid var(--Secondary-color);
+    border-radius: 0.8rem;
+    width: 40rem; // Este tamano tiene que coincidir con el de with de .container
+    &:focus {
+      outline: none;
+      border-color: var(--Primary-color);
+      box-shadow: 0 0 0.4rem var(--Primary-color);
+     
+    }
+  }
+  &_input {
+    padding: 1.2rem 1.6rem;
+     font-family: $font-primary;
+    font-size: 1.4rem;
+    font-weight: 600;
+    border: 1px solid var(--Secondary-color);
+    border-radius: 0.8rem;
+    width: 40rem; // Este tamano tiene que coincidir con el de with de .container
+
+    
+
+    &:focus {
+      outline: none;
+      border-color: var(--Primary-color);
+      box-shadow: 0 0 0.4rem var(--Primary-color);
+    }
+  }
+}
+
+
+
+.connectButton {
+  width: 100%;
+  padding: 1.4rem;
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: #ffffff;
+  background-color: var(--Primary-color);
+  border: none;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: var(--Primary-color);
+    filter: brightness(120%);
+  }
+}
+
+

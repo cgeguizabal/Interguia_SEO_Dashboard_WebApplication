@@ -1,0 +1,23 @@
+.inputForm{
+  grid-column: 2 / 10;
+  justify-self: center;
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  flex-direction: column;
+
+
+    &_header {
+      display: flex;
+      justify-content: center;
+    }
+
+    &_logo {
+    width: 40%;
+
+    &_image {
+      width: 100%;
+    }
+    }
+
+}
