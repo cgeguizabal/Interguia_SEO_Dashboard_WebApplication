@@ -1,0 +1,45 @@
+.menu{
+    &_container{
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    flex-direction: column;
+    text-align: start;
+   background-color: wheat;
+   max-height: 100vh;
+   min-height: 100vh;
+   width: 40rem;
+
+   padding: 4rem;
+}
+
+  &_wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: space-between;
+    
+  }
+}
+
+
+
+.menuList{
+    list-style: none;
+    padding: 0;
+    margin-top: 5rem;  
+    display: flex;
+    flex-direction: column;
+    gap: 2.4rem; 
+}
+
+.logo{
+
+    &_container{
+        width: 20%;
+    }
+
+    &_image{
+        width: 80%;
+    }
+}

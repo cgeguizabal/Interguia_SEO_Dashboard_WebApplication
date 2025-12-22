@@ -5,6 +5,7 @@ import LoginPage from "./pages/LoginPage.jsx";
 import SignupPage from "./pages/SignupPage.jsx";
 import AdminLoginPage from "./pages/AdminLoginPage.jsx";
 import DbConnectionPage from "./pages/DbConnectionPage.jsx";
+import Home from "./pages/Home.jsx";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/Signup" element={<SignupPage />} />
         <Route path="/AdminLogin" element={<AdminLoginPage />} />
         <Route path="/DbConnection" element={<DbConnectionPage />} />
+        <Route path="/Home" element={<Home />} />
 
       </Routes>
     </main>
