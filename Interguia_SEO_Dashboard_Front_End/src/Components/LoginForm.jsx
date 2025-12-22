@@ -1,4 +1,4 @@
-import LoginFormStyle from "../../styles/components/LoginForm.module.scss";
+import LoginFormStyle from "../styles/components/LoginForm.module.scss";
 
 function LoginForm() {
   return (

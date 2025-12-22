@@ -1,6 +1,6 @@
 import LoginStyle from "../styles/pages/LoginPage.module.scss";
 import CoverLogin from "../assets/images/Cover_Login.png";
-import LoginForm from "../assets/components/LoginForm";
+import LoginForm from "../Components/LoginForm";
 import Logo from "../assets/images/Logo_blue.png";
 import { BsDatabaseFillLock } from "react-icons/bs"; //Esto es un icono de react-icons
 
