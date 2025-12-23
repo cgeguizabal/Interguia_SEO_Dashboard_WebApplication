@@ -5,10 +5,11 @@ import logo from '../assets/images/Logo_blue.png';
 import { FaMoneyBillTransfer, FaBoxesPacking } from "react-icons/fa6";
 import { AiOutlineRise } from "react-icons/ai";
 import { FaRegChartBar, FaBoxes } from "react-icons/fa";
+import { ImExit } from "react-icons/im";
 
 
 
-export default function SideMenu({ selected, OnSelect}) {
+export default function SideMenu({ selected, onSelect}) {
 
 
 
@@ -28,11 +29,16 @@ export default function SideMenu({ selected, OnSelect}) {
             </figure>
             <ul className={SideMenuStyle.menuList}>
                 {menuItems.map((item, index) => (
-                    <li key={index}><button className={`${SideMenuStyle.menu_button} ${selected === item ? SideMenuStyle.active : ""}`} onClick={() => OnSelect(item)}>{item.icon} {item.label}</button></li>
+                    <li key={index}><button className={`${SideMenuStyle.menu_button}
+                     ${selected === item.label ?
+                         SideMenuStyle.menu_button_active : ""}`} onClick={() =>
+                         onSelect(item.label)}>
+                            {item.icon} {item.label}</button></li>
                 ))}
             </ul>
             </div>
-            <div>            <button>Salir de sesion</button>
+            <div>            <button className={SideMenuStyle.menu_button_exit}> <ImExit />
+Salir de sesion</button>
 </div>
         </nav>
     

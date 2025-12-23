@@ -1,3 +1,5 @@
+@use "../variables.scss" as *;
+
 .menu{
     &_container{
     display: flex;
@@ -5,12 +7,16 @@
     align-items: start;
     flex-direction: column;
     text-align: start;
-   background-color: wheat;
+   background-color: rgb(255, 255, 255);
    max-height: 100vh;
    min-height: 100vh;
    width: 40rem;
 
    padding: 4rem;
+
+   top: 0;
+   position: sticky;
+   overflow: hidden;
 }
 
   &_wrapper{
@@ -31,6 +37,7 @@
     display: flex;
     flex-direction: column;
     gap: 2.4rem; 
+    
 }
 
 .logo{
@@ -43,3 +50,59 @@
         width: 80%;
     }
 }
+
+.menu_button{
+    all: unset;
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--Quinary-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 2rem;    
+    width: 100%;
+    border-radius: 0.8rem;
+    
+transition: background-color 0.2s, color 0.2s;
+display: flex;
+align-items: center;
+gap: 1.5rem;
+
+   
+    &:hover{
+        background-color: var(--Secondary-color);color: white;
+    }
+    &_active{
+      background-color: var(--Primary-color);
+      color: #fff;
+
+      &:hover{
+        background-color: var(--Primary-color);
+        color: #fff;
+      }
+   }
+
+   &_exit{
+    all: unset;
+    font-size: 1.8rem;
+    font-weight: 500;
+    color: var(--Negative-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 2rem;    
+    width: 100%;
+    border-radius: 0.8rem;
+
+
+    transition: $transition-duration;
+
+    &:hover{
+        transform: scale(110%);
+    }
+}
+
+}
+

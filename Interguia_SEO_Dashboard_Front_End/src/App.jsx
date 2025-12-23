@@ -15,7 +15,7 @@ function App() {
         <Route path="/Signup" element={<SignupPage />} />
         <Route path="/AdminLogin" element={<AdminLoginPage />} />
         <Route path="/DbConnection" element={<DbConnectionPage />} />
-        <Route path="/Home" element={<Home />} />
+        <Route path="/" element={<Home />} />
 
       </Routes>
     </main>
