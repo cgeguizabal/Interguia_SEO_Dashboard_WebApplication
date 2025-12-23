@@ -10,8 +10,16 @@
 
     overflow-y: auto;
   height: 100vh;
-  padding: 1.5rem;
+  padding: 3rem;
 
 
   
 }
+
+.navbar_context{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 0;
+}
+

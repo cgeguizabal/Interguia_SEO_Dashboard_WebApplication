@@ -1,0 +1,19 @@
+@use "../variables.scss" as *;  
+
+.welcoming{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    font-size: 2.4rem;
+    
+
+    &_top{
+        font-weight: 500;
+        font-family: $font-primary ;
+    }
+
+    &_bottom{
+        font-weight: 600;
+        color: white;
+    }
+}
