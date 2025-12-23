@@ -1,8 +1,10 @@
+@use '../variables.scss' as *;
+
 .searchContainer {
   display: flex;
   align-items: center;
   border: none;
-  border-radius: 1rem;
+  border-radius: $border-radius;
   padding: 0.2rem 1rem;
   background: white;
   width: 40rem;

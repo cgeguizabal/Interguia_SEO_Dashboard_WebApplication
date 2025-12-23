@@ -1,0 +1,17 @@
+.Budget{
+    
+    &_DatePicker{
+        grid-column:  1 / -1;
+grid-row: 1 / 2;
+display: flex;
+justify-content: end;
+align-items: center;
+
+gap: 2rem;
+    }
+
+    &_firstRow{
+        grid-row: 2 / 3;
+    }
+}
+

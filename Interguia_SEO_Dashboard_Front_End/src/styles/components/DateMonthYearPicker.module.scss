@@ -1,0 +1,19 @@
+@use '../variables.scss' as *;
+
+.select {
+  padding: 0.6rem 1rem;
+  border-radius: $border-radius;
+  border: 1px solid var(--Secondary-color);
+  background: white;
+  font-size: 1.4rem; 
+}
+
+.option {
+   
+&:checked {
+    background-color: var(--Secondary-color);
+  }
+
+    &:hover {
+    background-color: #2671a7;  }
+}

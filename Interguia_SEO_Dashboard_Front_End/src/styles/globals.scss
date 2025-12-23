@@ -55,12 +55,12 @@ body {
 
   gap: 2rem;
   margin: 0 auto;
-  min-height: 100vh;
+  
 
   grid-template-columns:
-    [full-start] minmax(2rem, 1fr)
-    [center-start] repeat(8, [col-start] minmax(8rem, 22rem) [col-end])
-    [center-end] minmax(2rem, 1fr) [full-end];
+    
+    [center-start] repeat(8, [col-start] minmax(8rem, 22rem) [col-end]);
+    
 
   grid-template-rows: auto;
 }
