@@ -28,8 +28,17 @@
             box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
         }
 
-        &:active{
-            transform: scale(0.98);}
+        &_active{
+            background-color: var(--Primary-color);
+            color: white;
+
+            &:hover{
+                background-color: var(--Primary-color);
+                color: white;
+                box-shadow: none;
+            }
+        }
+
     }
 }
 

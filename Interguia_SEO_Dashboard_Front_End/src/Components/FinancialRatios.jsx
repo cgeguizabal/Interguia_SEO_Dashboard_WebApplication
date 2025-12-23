@@ -10,7 +10,7 @@ import Indebtedness from './FinacialRatiosComponents/Indebtedness';
 
 export default function FinancialRatios() {
 
-  const [selectedMenu, setSelectedMenu] = useState(null);
+  const [selectedMenu, setSelectedMenu] = useState(0);
 
   const handleMenuClick = (index) => {
     setSelectedMenu(index);
@@ -21,7 +21,9 @@ export default function FinancialRatios() {
   return (
     <>
     <div className={FinancialRatiosStyle.menu_container}>
-      {MenuItems.map((item, index) => <button onClick={() => handleMenuClick(index)} className={FinancialRatiosStyle.menu_button} key={index}>{item}</button>)}
+      {MenuItems.map((item, index) => <button onClick={() => handleMenuClick(index)} 
+      className={`${FinancialRatiosStyle.menu_button}
+       ${selectedMenu === index ? FinancialRatiosStyle.menu_button_active : ''}`} key={index}>{item}</button>)}
     </div>
     <div className={FinancialRatiosStyle.date_container}>Date</div>
     <div className={FinancialRatiosStyle.content_container}>
