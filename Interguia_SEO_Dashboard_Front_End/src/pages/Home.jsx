@@ -7,22 +7,14 @@ import HomePageStyle from '../styles/pages/Home.module.scss'
 
 export default function Home() {
 
-    const [SelectedMenu, setSelectedMenu] = useState("Presupuestos")
+    const [SelectedMenu, SetSelectedMenu] = useState("Presupuestos")
+console.log(SelectedMenu);
   return (
     <div className={HomePageStyle.container} >      
-<SideMenu selected={SelectedMenu} onSelect={setSelectedMenu} />
-<div>CONTENT</div>
+<SideMenu selected={SelectedMenu} onSelect={SetSelectedMenu} />
+<div className={HomePageStyle.content}>CONTENT</div>
     </div>
   )
 }
 
 
-/*
-
-className={`${styles.menuItem} ${
-            selected === item ? styles.active : ""
-          }`}
-          onClick={() => onSelect(item)}
-        >
-        
-*/
