@@ -25,7 +25,7 @@ export default function Home() {
   return (
     <div className={HomePageStyle.container} >      
 <SideMenu selected={SelectedMenu} onSelect={SetSelectedMenu} />
-<div className={`${HomePageStyle.content} `}>
+<div className={`${HomePageStyle.content}`}>
   <div className={HomePageStyle.navbar_context}><Welcoming /> <SearchBar onSearch={handleSearch} /></div>
   <div className='grid-container_auto_rows_content'>
     {SelectedMenu === "Presupuestos" && <Budget />}
@@ -35,9 +35,8 @@ export default function Home() {
     {SelectedMenu === "Inventario" && <Inventory />}
   </div>
 
-  </div>
-   
-    </div>
+  </div> 
+</div>
   )
 }
 
