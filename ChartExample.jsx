@@ -35,6 +35,7 @@ export default function Budget() {
           'rgb(82, 145, 197)',
           'rgb(187, 213, 228)',
         ],
+        // parsing: false, “Don’t try to extract x/y automatically. The data is already in the exact format I want.”
         // borderColor: [
         //   'rgb(187, 213, 228)',
         //   'rgb(187, 213, 228)',
@@ -128,14 +129,7 @@ export default function Budget() {
       <div className={BudgetStyle.Budget_DatePicker}>
         <DateMonthYearPicker />
       </div>
-      <div >
-        <h1>Second Row</h1>
-        <h1>Second Row</h1>
-        <h1>Second Row </h1>
-        <h1>Second Row </h1>
-      </div>
       <div className={BudgetStyle.Budget_firstRow}>
-        
         <canvas ref={chartRef}></canvas>
       </div>
     </>

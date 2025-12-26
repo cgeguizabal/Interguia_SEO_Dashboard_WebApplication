@@ -9,11 +9,11 @@
 }
 
 :root {
-  --Primary-color: #5291c5; // Usar en cajas, botones, iconos, titulos y elementos principales
-  --Secondary-color: #bbd5e4; // Usar en fondos, bordes, elementos secundarios
+  --Primary-color: rgb(82, 145, 197); // Usar en cajas, botones, iconos, titulos y elementos principales
+  --Secondary-color: rgb(187, 213, 228); // Usar en fondos, bordes, elementos secundarios
   --Tertiary-color: #040b59; // Usar en textos principales, iconos principales
   --Quaternary-color: #06033b; // Usar en fondos oscuros, barras de navegación
-  --Quinary-color: #a3aed0; // Usar en textos secundarios, iconos secundarios
+  --Quinary-color: rgb(163, 174, 208); // Usar en textos secundarios, iconos secundarios
   --Negative-color: #ef5e61; // Usar en alertas, errores, mensajes negativos
   --Positiive-color: #4bb543; // Usar en mensajes de éxito, confirmaciones
   --Background-gradient: linear-gradient(
