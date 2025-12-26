@@ -23,7 +23,8 @@ export default function FinancialRatios() {
     <div className={FinancialRatiosStyle.menu_container}>
       {MenuItems.map((item, index) => <button onClick={() => handleMenuClick(index)} 
       className={`${FinancialRatiosStyle.menu_button}
-       ${selectedMenu === index ? FinancialRatiosStyle.menu_button_active : ''}`} key={index}>{item}</button>)}
+       ${selectedMenu === index ? FinancialRatiosStyle.menu_button_active : ''}`}
+        key={index}>{item}</button>)}
     </div>
 
     <>

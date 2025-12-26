@@ -1,0 +1,43 @@
+@use "../variables.scss" as *;
+
+.menu{
+    &_container{
+      grid-row: 1 /2;
+      grid-column: 1 /-1;
+      display: flex;
+        align-items: center;
+        justify-content: start;
+        gap: 2rem;
+
+    }
+
+    &_button{
+        padding: 0.5rem 1rem;
+        border-radius: 0.8rem;
+        background-color: white;
+        color: var(--Primary-color);
+        font-family: $font-primary;
+        font-size: 1.6rem;
+        cursor: pointer;
+        border: none;
+        transition: $transition-duration;
+
+        &:hover{
+            background-color: var(--Secondary-color);
+            color: white;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        &_active{
+            background-color: var(--Primary-color);
+            color: white;
+
+            &:hover{
+                background-color: var(--Primary-color);
+                color: white;
+                box-shadow: none;
+            }
+        }
+
+    }
+}
