@@ -7,7 +7,7 @@ import SearchBar from '../Components/SearchBar';
 import Budget from '../Components/Budget';
 import FinancialRatios from '../Components/FinancialRatios';
 import Distribution from '../Components/Distribution';
-import SellsAnalysis from '../Components/SellsAnalysis';
+import SalesAnalysis from '../Components/SalesAnalysis';
 import Inventory from '../Components/Inventory';
 
 
@@ -31,7 +31,7 @@ export default function Home() {
     {SelectedMenu === "Presupuestos" && <Budget />}
     {SelectedMenu === "Ratios Financieros" && <FinancialRatios />}
     {SelectedMenu === "Distribución" && <Distribution />}
-    {SelectedMenu === "Analisis de Ventas" && <SellsAnalysis />}
+    {SelectedMenu === "Analisis de Ventas" && <SalesAnalysis />}
     {SelectedMenu === "Inventario" && <Inventory />}
   </div>
 

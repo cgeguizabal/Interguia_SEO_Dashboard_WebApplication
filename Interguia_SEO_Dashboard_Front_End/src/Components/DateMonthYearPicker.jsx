@@ -14,7 +14,8 @@ export default function DateMonthYearPicker() {
     <>
         <select className={DateMonthYearPickerStyles.select}>
             {Months.map((month, index) => (
-                <option className={DateMonthYearPickerStyles.option} key={index} value={month}>{month}</option>
+                <option className={DateMonthYearPickerStyles.option} 
+                key={index} value={month}>{month}</option>
             ))}
         </select>
 
