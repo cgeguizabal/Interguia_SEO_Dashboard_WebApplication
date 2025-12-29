@@ -1,64 +1,74 @@
 @use "../variables.scss" as *;
-.Budget{
-    
-    &_DatePicker{
-        grid-column:  1 / -1;
-grid-row: 1 / 2;
-display: flex;
-justify-content: end;
-align-items: center;
+.Budget {
+  &_DatePicker {
+    grid-column: 1 / -1;
+    grid-row: 1 / 2;
+    display: flex;
+    justify-content: end;
+    align-items: center;
 
-gap: 2rem;
+    gap: 2rem;
+  }
+
+  &_ComparativeChartLine {
+    grid-row: 3/ 4;
+    grid-column: 1 / 6;
+    background-color: white;
+    padding: 2rem;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+
+    &_TopBar {
+      display: flex;
+      justify-content: space-between;
     }
-
-    &_ComparativeChartLine{
-        grid-row: 3/ 4;
-        grid-column: 1 / 6;
-        background-color: white;
-        padding: 2rem;
-        border-radius: $border-radius;
-        box-shadow: $box-shadow;
-
-        &_TopBar{
-            display: flex;
-            justify-content: space-between;
-        }
-        &_Title{
-            color: var(--Quinary-color);
-            font-size: 1.8rem;
-            font-weight: 400;
-        }
+    &_Title {
+      color: var(--Quinary-color);
+      font-size: 1.8rem;
+      font-weight: 400;
     }
+  }
 
-    &_CardLarge{
-        grid-column: 6 / 9;
-        grid-row: 3 / 4;
-    }
+  &_CardLarge {
+    grid-column: 6 / 9;
+    grid-row: 3 / 4;
+  }
 
+  &_firstRow {
+    grid-row: 4/ 5;
+    grid-column: 1 / 4;
+    background-color: white;
+    padding: 2rem;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+  }
 
+  &_CardBar {
+    grid-column: 1 / -1;
 
-    &_firstRow{
-        grid-row: 4/ 5;
-        grid-column: 1 / 4;
-        background-color: white;
-        padding: 2rem;
-        border-radius: $border-radius;
-        box-shadow: $box-shadow;
-    }
-
-
-    &_CardBar{
-        grid-column: 1 / -1;
-
-
-        display: flex;
-        gap: 2rem;
-        justify-content: space-between;
-
-    }
+    display: flex;
+    gap: 2rem;
+    justify-content: space-between;
+  }
 }
 
+.select {
+  padding: 0.6rem 1rem;
+  border-radius: $border-radius;
+  border: none;
+  background: white;
+  font-size: 1.4rem;
+}
 
+.option {
+  &:checked {
+    background-color: var(--Secondary-color);
+  }
+
+  &:hover {
+    background-color: #2671a7;
+  }
+}
 
 //  canvas {
 //     display: block;

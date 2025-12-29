@@ -9,17 +9,29 @@
 }
 
 :root {
-  --Primary-color: rgb(82, 145, 197); // Usar en cajas, botones, iconos, titulos y elementos principales
-  --Secondary-color: rgb(187, 213, 228); // Usar en fondos, bordes, elementos secundarios
+  --Primary-color: rgb(
+    82,
+    145,
+    197
+  ); // Usar en cajas, botones, iconos, titulos y elementos principales
+  --Secondary-color: rgb(
+    187,
+    213,
+    228
+  ); // Usar en fondos, bordes, elementos secundarios
   --Tertiary-color: #040b59; // Usar en textos principales, iconos principales
   --Quaternary-color: #06033b; // Usar en fondos oscuros, barras de navegación
-  --Quinary-color: rgb(163, 174, 208); // Usar en textos secundarios, iconos secundarios
+  --Quinary-color: rgb(
+    163,
+    174,
+    208
+  ); // Usar en textos secundarios, iconos secundarios
   --Negative-color: #ef5e61; // Usar en alertas, errores, mensajes negativos
-  --Positive-color: #4bb543; // Usar en mensajes de éxito, confirmaciones
+  --Positive-color: #05cd99; // Usar en mensajes de éxito, confirmaciones
   --Positive-bg-color: rgba(5, 205, 152, 0.15);
   --Background-gradient: linear-gradient(
     180deg,
-    #cfe0e9 ,
+    #cfe0e9,
     #5291c5
   ); // Usar en fondos principales
 }
@@ -56,13 +68,11 @@ body {
 
   gap: 2rem;
   margin: 0 auto;
-  
 
-  grid-template-columns:
-    
-    [center-start] repeat(8, [col-start] minmax(8rem, 22rem) [col-end]);
-    
+  grid-template-columns: [center-start] repeat(
+      8,
+      [col-start] minmax(8rem, 22rem) [col-end]
+    );
 
   grid-template-rows: auto;
 }
-
