@@ -11,8 +11,34 @@ align-items: center;
 gap: 2rem;
     }
 
-    &_firstRow{
+    &_ComparativeChartLine{
         grid-row: 3/ 4;
+        grid-column: 1 / 6;
+        background-color: white;
+        padding: 2rem;
+        border-radius: $border-radius;
+        box-shadow: $box-shadow;
+
+        &_TopBar{
+            display: flex;
+            justify-content: space-between;
+        }
+        &_Title{
+            color: var(--Quinary-color);
+            font-size: 1.8rem;
+            font-weight: 400;
+        }
+    }
+
+    &_CardLarge{
+        grid-column: 6 / 9;
+        grid-row: 3 / 4;
+    }
+
+
+
+    &_firstRow{
+        grid-row: 4/ 5;
         grid-column: 1 / 4;
         background-color: white;
         padding: 2rem;

@@ -6,6 +6,10 @@ import BudgetStyle from '../styles/components/Budget.module.scss';
 import DateMonthYearPicker from './DateMonthYearPicker';
 import Card_Small_TextRight from './Charts/Card_Small_TextRight';
 import Card_Small_TextLeft from './Charts/Card_Small_TextLeft';
+import ComparativeLineChart from './Charts/ComparativeLineChart';
+import Card_Large from './Charts/Card_Large';
+import { FaChartSimple } from "react-icons/fa6";
+
 
 
 //ICONS
@@ -13,11 +17,6 @@ import { BsBarChartFill } from "react-icons/bs";
 import { RiBarChartBoxAiFill } from "react-icons/ri";
 import { FaMoneyBillTrendUp } from "react-icons/fa6";
 import { FaMoneyCheckDollar } from "react-icons/fa6";
-
-
-
-
-
 
 
 
@@ -141,24 +140,48 @@ export default function Budget() {
 
   return (
     <>
+
+    {/* DATE PICKER */}
       <div className={BudgetStyle.Budget_DatePicker}>
         <DateMonthYearPicker />
       </div>
+
+      {/* CARDBAR */}
       <div className={BudgetStyle.Budget_CardBar}>
+
+        {/* Card-1 */}
         <Card_Small_TextRight icon={<BsBarChartFill />}
          title="Ingreso Total Mensual" data="$1500.00"/>
-        <Card_Small_TextLeft icon={<RiBarChartBoxAiFill />
 
-} 
-        title="Gasto Total Mensual" data="$3250.00"/>
+
+         {/* Card-2 */}
+        <Card_Small_TextLeft icon={<RiBarChartBoxAiFill />} title="Gasto Total Mensual" data="$3250.00"/>
+
+        {/* Card-3 */}
         <Card_Small_TextRight icon={<FaMoneyBillTrendUp />
 
 } title="Utilidad Neta Mensual" data="$2458.00"/>
+
+        {/* Card-4 */}
         <Card_Small_TextRight icon={<FaMoneyCheckDollar />
 
 } title="Presupuesto Mensual" data="$1500.00"/>
         
       </div>
+      {/* LINECHART Comparativo */}
+      <div className={BudgetStyle.Budget_ComparativeChartLine}>
+        <div className={BudgetStyle.Budget_ComparativeChartLine_TopBar}> <h3 className={BudgetStyle.Budget_ComparativeChartLine_Title}>
+          Presupuesto Vs Gastado al Mes</h3><div><DateMonthYearPicker/></div>
+          </div>
+        <ComparativeLineChart/></div>
+
+        {/* CardLarge */}
+
+        <div className={BudgetStyle.Budget_CardLarge}>
+          <Card_Large title="Presupuesto Final del Mes Anterio Vs Actual" icon={<FaChartSimple />} 
+          data="$10500.50" performance="-25%"
+          />
+        </div>
       <div className={BudgetStyle.Budget_firstRow}>
         
         <canvas ref={chartRef}></canvas>
@@ -166,3 +189,5 @@ export default function Budget() {
     </>
   );
 }
+
+
