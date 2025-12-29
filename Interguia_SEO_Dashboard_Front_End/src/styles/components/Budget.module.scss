@@ -19,7 +19,20 @@ gap: 2rem;
         border-radius: $border-radius;
         box-shadow: $box-shadow;
     }
+
+
+    &_CardBar{
+        grid-column: 1 / -1;
+
+
+        display: flex;
+        gap: 2rem;
+        justify-content: space-between;
+
+    }
 }
+
+
 
 //  canvas {
 //     display: block;

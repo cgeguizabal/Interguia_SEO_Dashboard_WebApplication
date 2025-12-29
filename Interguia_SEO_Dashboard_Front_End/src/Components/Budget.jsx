@@ -4,6 +4,22 @@ import Chart from 'chart.js/auto';
 
 import BudgetStyle from '../styles/components/Budget.module.scss';
 import DateMonthYearPicker from './DateMonthYearPicker';
+import Card_Small_TextRight from './Charts/Card_Small_TextRight';
+import Card_Small_TextLeft from './Charts/Card_Small_TextLeft';
+
+
+//ICONS
+import { BsBarChartFill } from "react-icons/bs";
+import { RiBarChartBoxAiFill } from "react-icons/ri";
+import { FaMoneyBillTrendUp } from "react-icons/fa6";
+import { FaMoneyCheckDollar } from "react-icons/fa6";
+
+
+
+
+
+
+
 
 export default function Budget() {
   const chartRef = useRef(null); // ref for the canvas
@@ -128,11 +144,20 @@ export default function Budget() {
       <div className={BudgetStyle.Budget_DatePicker}>
         <DateMonthYearPicker />
       </div>
-      <div >
-        <h1>Second Row</h1>
-        <h1>Second Row</h1>
-        <h1>Second Row </h1>
-        <h1>Second Row </h1>
+      <div className={BudgetStyle.Budget_CardBar}>
+        <Card_Small_TextRight icon={<BsBarChartFill />}
+         title="Ingreso Total Mensual" data="$1500.00"/>
+        <Card_Small_TextLeft icon={<RiBarChartBoxAiFill />
+
+} 
+        title="Gasto Total Mensual" data="$3250.00"/>
+        <Card_Small_TextRight icon={<FaMoneyBillTrendUp />
+
+} title="Utilidad Neta Mensual" data="$2458.00"/>
+        <Card_Small_TextRight icon={<FaMoneyCheckDollar />
+
+} title="Presupuesto Mensual" data="$1500.00"/>
+        
       </div>
       <div className={BudgetStyle.Budget_firstRow}>
         

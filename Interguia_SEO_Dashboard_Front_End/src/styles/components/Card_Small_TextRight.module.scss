@@ -1,0 +1,55 @@
+@use "../variables.scss" as *;
+
+.card{
+
+    &_container{
+ display: flex;
+    justify-content: space-between;
+    align-items: center;
+    
+    background-color: white;
+
+    padding: 2.5rem 3.5rem;
+
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+
+    width: 100%;
+    
+    flex-basis: 25%;
+
+
+    }
+   
+    &_text{
+
+        &_container{
+            display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        }
+
+
+        &_title{
+            font-size: 2.2rem;
+            font-weight: 400;
+            color: var(--Quinary-color);
+        }
+
+        &_data{
+            font-family: $font-secondary;
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--Tertiary-color);
+        }
+        
+    }
+
+}
+
+.icon_container{
+    
+    font-size: 4rem;
+   
+}
+
