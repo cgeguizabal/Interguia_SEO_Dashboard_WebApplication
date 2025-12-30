@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import Chart from 'chart.js/auto';
 
-export default function ComparativeLineChart() {
+export default function ComparativeLineChart({label1,label2, data1, data2}) {
   const canvasRef = useRef(null);
   const chartRef = useRef(null);
 
@@ -18,8 +18,8 @@ export default function ComparativeLineChart() {
         labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', "Ago", "Sep", "Oct", "Nov", "Dic" ],
         datasets: [
           {
-            label: 'Gastos',
-            data: [1200, 1400, 1350, 1600, 1700, 1800, 1320,1450,2500,1000,500,1000],
+            label: label1,
+            data: data1,
             borderColor: 'rgb(82, 145, 197)',
             backgroundColor: 'rgba(82, 145, 197, 0.15)',
             tension: 0.4,
@@ -28,8 +28,8 @@ export default function ComparativeLineChart() {
             
           },
           {
-            label: 'Presupuestos',
-            data: [900, 1100, 1050, 1200, 1300, 1500, 1000, 2500,3240,500,1000,1000],
+            label: label2,
+            data: data2,
             borderColor: 'rgb(187, 213, 228)',
             backgroundColor: 'rgba(187, 213, 228, 0.15)',
             tension: 0.4,
@@ -89,7 +89,7 @@ export default function ComparativeLineChart() {
     });
 
     return () => chartRef.current?.destroy();
-  }, []);
+  }, [data1, data2, label1, label2]);
 
   return <canvas ref={canvasRef} />;
 }

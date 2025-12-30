@@ -18,11 +18,22 @@
     border-radius: $border-radius;
     box-shadow: $box-shadow;
 
-    &_TopBar {
+    &_2{
+      grid-column: 4 / 9;
+      grid-row: 4 / 7;
+        background-color: white;
+    padding: 2rem;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+    }
+
+    &_TopBar, &_TopBar_2 {
       display: flex;
       justify-content: space-between;
+
+      
     }
-    &_Title {
+    &_Title, &_Title_2 {
       color: var(--Quinary-color);
       font-size: 1.8rem;
       font-weight: 400;

@@ -140,6 +140,14 @@ export default function Budget() {
   }, []); // runs once
 
   const scenarios = ["Scenario-1", "Scenario-2", "Scenario-3"];
+
+
+  //DATOS para grafica  de linebar
+  const gastos= [1200, 1400, 1350, 1600, 1700, 1800, 1320,1450,2500,1000,500,1000];
+  const gastosPresupuestos = [900, 1100, 1050, 1200, 1300, 1500, 1000, 2500,3240,500,1000,1000];
+
+  const ingresos= [1400, 1600, 1200,  2500, 1350,  1700, 1800, 1320,1450,1000,500,1000];
+  const ingresosPresupuestos = [2500, 1100, 1050, 1200,  1500, 1000, 3240, 900,500,1000,1000, 1300];
   return (
     <>
       {/* DATE PICKER AND SCENARIO*/}
@@ -147,7 +155,7 @@ export default function Budget() {
         <div>
           <select className={BudgetStyle.select}>
             {scenarios.map((item, index) => (
-              <option className={BudgetStyle.option}>{item}</option>
+              <option className={BudgetStyle.option} key={index}>{item}</option>
             ))}
           </select>
         </div>
@@ -178,13 +186,13 @@ export default function Budget() {
         />
 
         {/* Card-4 */}
-        <Card_Small_TextRight
+        <Card_Small_TextLeft
           icon={<FaMoneyCheckDollar />}
           title="Presupuesto Mensual"
           data="$1500.00"
         />
       </div>
-      {/* LINECHART Comparativo */}
+      {/* LINECHART Comparativo-1 */}
       <div className={BudgetStyle.Budget_ComparativeChartLine}>
         <div className={BudgetStyle.Budget_ComparativeChartLine_TopBar}>
           {" "}
@@ -195,7 +203,7 @@ export default function Budget() {
             <DateMonthYearPicker />
           </div>
         </div>
-        <ComparativeLineChart />
+        <ComparativeLineChart label1="Gastos" label2="Presupuestos" data1={gastos} data2={gastosPresupuestos} />
       </div>
 
       {/* CardLarge */}
@@ -208,9 +216,22 @@ export default function Budget() {
           performance="-25%"
         />
       </div>
-      <div className={BudgetStyle.Budget_firstRow}>
-        <canvas ref={chartRef}></canvas>
+
+
+       {/* LINECHART Comparativo-2 */}
+      <div className={BudgetStyle.Budget_ComparativeChartLine_2}>
+        <div className={BudgetStyle.Budget_ComparativeChartLine_TopBar_2}>
+          {" "}
+          <h3 className={BudgetStyle.Budget_ComparativeChartLine_Title_2}>
+            Presupuesto Vs Ingreso al Mes
+          </h3>
+          <div>
+            <DateMonthYearPicker />
+          </div>
+        </div>
+        <ComparativeLineChart label1="Ingresos" label2="Presupuestos" data1={ingresos} data2={ingresosPresupuestos}/>
       </div>
+      
     </>
   );
 }
