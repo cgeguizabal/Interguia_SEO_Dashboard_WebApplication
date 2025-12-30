@@ -249,6 +249,17 @@ export default function Budget() {
           data="$2500.00"
         />
         </div>
+
+        <div className={BudgetStyle.Budget_CardBar_2}>
+          <div className={BudgetStyle.Budget_CardBar_2_Card}>
+            <h3 className={BudgetStyle.Budget_CardBar_2_Card_title}>Ingreso mes Actual</h3>
+            <h2 className={BudgetStyle.Budget_CardBar_2_Card_data}>$1500</h2>
+          </div>
+          <div className={BudgetStyle.Budget_CardBar_2_Card}>
+            <h3 className={BudgetStyle.Budget_CardBar_2_Card_title}>Presupuesto Actual</h3>
+            <h2 className={BudgetStyle.Budget_CardBar_2_Card_data}>$1800</h2>
+          </div>
+        </div>
       
     </>
   );
