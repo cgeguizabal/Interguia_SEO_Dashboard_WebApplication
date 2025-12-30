@@ -61,6 +61,15 @@
     gap: 2rem;
     justify-content: space-between;
   }
+
+  &_CardSmall_5{
+    grid-column: 1 / 4;
+    grid-row: 6;
+  }
+   &_CardSmall_6{
+    grid-column: 1 / 4;
+    grid-row: 5;
+  }
 }
 
 .select {

@@ -231,6 +231,24 @@ export default function Budget() {
         </div>
         <ComparativeLineChart label1="Ingresos" label2="Presupuestos" data1={ingresos} data2={ingresosPresupuestos}/>
       </div>
+
+        {/* Card-5 */}
+        <div className={BudgetStyle.Budget_CardSmall_5}>
+        <Card_Small_TextLeft
+          icon={<FaMoneyCheckDollar />}
+          title="Gastos Totales Anuales"
+          data="$1400.00"
+        />
+        </div>
+
+           {/* Card-6 */}
+        <div className={BudgetStyle.Budget_CardSmall_6}>
+        <Card_Small_TextRight
+          icon={<BsBarChartFill />}
+          title="Ingresos Totales Anuales"
+          data="$2500.00"
+        />
+        </div>
       
     </>
   );
