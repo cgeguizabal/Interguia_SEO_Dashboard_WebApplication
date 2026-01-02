@@ -141,13 +141,20 @@ export default function Budget() {
 
   const scenarios = ["Scenario-1", "Scenario-2", "Scenario-3"];
 
-
   //DATOS para grafica  de linebar
-  const gastos= [1200, 1400, 1350, 1600, 1700, 1800, 1320,1450,2500,1000,500,1000];
-  const gastosPresupuestos = [900, 1100, 1050, 1200, 1300, 1500, 1000, 2500,3240,500,1000,1000];
+  const gastos = [
+    1200, 1400, 1350, 1600, 1700, 1800, 1320, 1450, 2500, 1000, 500, 1000,
+  ];
+  const gastosPresupuestos = [
+    900, 1100, 1050, 1200, 1300, 1500, 1000, 2500, 3240, 500, 1000, 1000,
+  ];
 
-  const ingresos= [1400, 1600, 1200,  2500, 1350,  1700, 1800, 1320,1450,1000,500,1000];
-  const ingresosPresupuestos = [2500, 1100, 1050, 1200,  1500, 1000, 3240, 900,500,1000,1000, 1300];
+  const ingresos = [
+    1400, 1600, 1200, 2500, 1350, 1700, 1800, 1320, 1450, 1000, 500, 1000,
+  ];
+  const ingresosPresupuestos = [
+    2500, 1100, 1050, 1200, 1500, 1000, 3240, 900, 500, 1000, 1000, 1300,
+  ];
   return (
     <>
       {/* DATE PICKER AND SCENARIO*/}
@@ -155,7 +162,9 @@ export default function Budget() {
         <div>
           <select className={BudgetStyle.select}>
             {scenarios.map((item, index) => (
-              <option className={BudgetStyle.option} key={index}>{item}</option>
+              <option className={BudgetStyle.option} key={index}>
+                {item}
+              </option>
             ))}
           </select>
         </div>
@@ -203,7 +212,12 @@ export default function Budget() {
             <DateMonthYearPicker />
           </div>
         </div>
-        <ComparativeLineChart label1="Gastos" label2="Presupuestos" data1={gastos} data2={gastosPresupuestos} />
+        <ComparativeLineChart
+          label1="Gastos"
+          label2="Presupuestos"
+          data1={gastos}
+          data2={gastosPresupuestos}
+        />
       </div>
 
       {/* CardLarge */}
@@ -217,8 +231,7 @@ export default function Budget() {
         />
       </div>
 
-
-       {/* LINECHART Comparativo-2 */}
+      {/* LINECHART Comparativo-2 */}
       <div className={BudgetStyle.Budget_ComparativeChartLine_2}>
         <div className={BudgetStyle.Budget_ComparativeChartLine_TopBar_2}>
           {" "}
@@ -229,38 +242,47 @@ export default function Budget() {
             <DateMonthYearPicker />
           </div>
         </div>
-        <ComparativeLineChart label1="Ingresos" label2="Presupuestos" data1={ingresos} data2={ingresosPresupuestos}/>
+        <ComparativeLineChart
+          label1="Ingresos"
+          label2="Presupuestos"
+          data1={ingresos}
+          data2={ingresosPresupuestos}
+        />
       </div>
 
-        {/* Card-5 */}
-        <div className={BudgetStyle.Budget_CardSmall_5}>
+      {/* Card-5 */}
+      <div className={BudgetStyle.Budget_CardSmall_5}>
         <Card_Small_TextLeft
           icon={<FaMoneyCheckDollar />}
           title="Gastos Totales Anuales"
           data="$1400.00"
         />
-        </div>
+      </div>
 
-           {/* Card-6 */}
-        <div className={BudgetStyle.Budget_CardSmall_6}>
+      {/* Card-6 */}
+      <div className={BudgetStyle.Budget_CardSmall_6}>
         <Card_Small_TextRight
           icon={<BsBarChartFill />}
           title="Ingresos Totales Anuales"
           data="$2500.00"
         />
-        </div>
+      </div>
 
-        <div className={BudgetStyle.Budget_CardBar_2}>
-          <div className={BudgetStyle.Budget_CardBar_2_Card}>
-            <h3 className={BudgetStyle.Budget_CardBar_2_Card_title}>Ingreso mes Actual</h3>
-            <h2 className={BudgetStyle.Budget_CardBar_2_Card_data}>$1500</h2>
-          </div>
-          <div className={BudgetStyle.Budget_CardBar_2_Card}>
-            <h3 className={BudgetStyle.Budget_CardBar_2_Card_title}>Presupuesto Actual</h3>
-            <h2 className={BudgetStyle.Budget_CardBar_2_Card_data}>$1800</h2>
-          </div>
+      {/* CARD-7  */}
+      <div className={BudgetStyle.Budget_CardBar_2}>
+        <div className={BudgetStyle.Budget_CardBar_2_Card}>
+          <h3 className={BudgetStyle.Budget_CardBar_2_Card_title}>
+            Ingreso mes Actual
+          </h3>
+          <h2 className={BudgetStyle.Budget_CardBar_2_Card_data}>$1500</h2>
         </div>
-      
+        <div className={BudgetStyle.Budget_CardBar_2_Card}>
+          <h3 className={BudgetStyle.Budget_CardBar_2_Card_title}>
+            Presupuesto Actual
+          </h3>
+          <h2 className={BudgetStyle.Budget_CardBar_2_Card_data}>$1800</h2>
+        </div>
+      </div>
     </>
   );
 }
