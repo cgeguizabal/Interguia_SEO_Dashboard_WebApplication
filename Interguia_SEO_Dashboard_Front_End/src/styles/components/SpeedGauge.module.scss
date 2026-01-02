@@ -1,0 +1,27 @@
+.gauge {
+  position: relative;
+  width: 300px;
+  height: 180px;
+}
+
+.value {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%) translateY(70%);
+  font-weight: 600;
+  font-size: 2.8rem;
+}
+
+.text{
+
+    &_container{
+        display: flex;
+        flex-direction: column;
+    }
+
+}
+
+.title{
+    color: var(--Quaternary-color);
+}

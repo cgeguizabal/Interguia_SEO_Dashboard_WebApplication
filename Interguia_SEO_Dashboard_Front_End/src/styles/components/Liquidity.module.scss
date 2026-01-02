@@ -1,0 +1,12 @@
+@use "../variables.scss" as *;
+
+.SpeedGauge{
+    &_container{
+        grid-column: 1 / 5;
+        background-color: white;
+        width: 100%;
+        border-radius: $border-radius;
+        box-shadow: $box-shadow;
+        height: 50rem;
+    }
+}
