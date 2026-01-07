@@ -69,7 +69,7 @@ class ItemController extends Controller
         ], 200);
         
     } catch (QueryException $e) {
-        // This catches SQL / DB errors
+        
         return response()->json([
             'status' => false,
             'error' => 'Database query failed',
@@ -77,7 +77,7 @@ class ItemController extends Controller
         ], 409);
         
     } catch (\Exception $e) {
-        // This catches all other PHP errors
+        
         return response()->json([
             'status' => false,
             'error' => 'Something went wrong',
@@ -141,6 +141,77 @@ public function itemByBatch($batch)
             'status' => true,
             'data' => $items
         ], 200);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'status' => false,
+            'error' => 'Something went wrong',
+            'message' => $e->getMessage()
+        ], 500);
+    }
+}
+
+ public function itemBySerie($serie)
+{
+    try {
+        $items = Item::query()
+            ->leftJoin('OBTN', 'OITM.ItemCode', '=', 'OBTN.ItemCode') // batches
+            ->leftJoin('UGP1', 'OITM.UgpEntry', '=', 'UGP1.UgpEntry') // unit groups
+            ->leftJoin('OUOM', 'UGP1.UomEntry', '=', 'OUOM.UomEntry') // units
+            ->where('OITM.ItemCode', $serie)
+            ->select(
+                'OITM.ItemCode as ItemCodeID',
+                'OITM.ItemName',
+                'OITM.OnHand as TotalStock',
+                'OITM.IsCommited',
+                'OITM.OnOrder',
+                'OITM.InvntryUom as InventoryUnit',
+                'OBTN.CreateDate',
+                'OBTN.ExpDate',
+                'OBTN.AbsEntry as NoRecord',
+                'OBTN.DistNumber as BatchNumber',
+                'OBTN.Quantity as BatchStock',
+                'OUOM.UomName as UnitName',
+                'UGP1.AltQty',
+                'UGP1.BaseQty'
+            )
+            ->get()
+            ->groupBy('ItemCodeID')
+            ->map(function($itemGroup) {
+                $first = $itemGroup->first();
+                return [
+                    'ItemCode' => $first->ItemCodeID,
+                    'ItemName' => $first->ItemName,
+                    'TotalStock' => $first->TotalStock,
+                    'InventoryUnit' => $first->InventoryUnit,
+                    'Batches' => $itemGroup->unique('BatchNumber')->values()->map(fn($b) => [
+                        'BatchNumber' => $b->BatchNumber ?? null,
+                        'CreateDate' => $b->CreateDate ?? null,
+                        'ExpDate' => $b->ExpDate ?? null,
+                        'NoRecord' => $b->NoRecord ?? null,
+                        'StockInBatch' => $b->BatchStock ?? 0,
+                    ]),
+                    'Conversions' => $itemGroup->unique('UnitName')->map(fn($c) => [
+                        'UnitName' => $c->UnitName,
+                        'UnitAmount' => $c->AltQty,
+                        'BaseQty' => $c->BaseQty,
+                        'StockInUnit' => $first->TotalStock * ($c->AltQty / $c->BaseQty)
+                    ])
+                ];
+            })
+            ->values();
+
+        return response()->json([
+            'status' => true,
+            'data' => $items
+        ], 200);
+
+    } catch (QueryException $e) {
+        return response()->json([
+            'status' => false,
+            'error' => 'Database query failed',
+            'message' => $e->getMessage()
+        ], 409);
 
     } catch (\Exception $e) {
         return response()->json([
