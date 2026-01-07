@@ -13,3 +13,4 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/v1/items', [ItemController::class, 'index']);
 Route::get('/v1/categories',[CategoryController::class, 'index']);
+Route::get('/v1/items/{batch}', [ItemController::class, 'itemByBatch']);
