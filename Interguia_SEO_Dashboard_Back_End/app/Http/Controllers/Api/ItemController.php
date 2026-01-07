@@ -250,7 +250,39 @@ public function itemByBatch($itemCode)
 
 public function itemByCategory($itemcCode){
 
-    
+    try{
+
+
+        $items = Item::query()->leftJoin('OITB', 'OITM.ItmsGrpCod', '=', 'OITB.ItmsGrpCod')
+        ->where('OITM.ItmsGrpCod', $itemcCode)
+        ->select('OITM.ItemCode as ItemCodeID',
+        'OITM.ItemName',)->get();
+
+        /* $items = Item::query()
+            ->where('ItmsGrpCod', $itemcCode) // filter by category code
+            ->select('ItemCode as ItemCodeID', 'ItemName')
+            ->get(); */
+
+        return response()->json([
+            'status' => true,
+            'data' => $items
+        ],200);
+
+
+    }catch (QueryException $e) {
+        return response()->json([
+            'status' => false,
+            'error' => 'Database query failed',
+            'message' => $e->getMessage()
+        ], 409);
+
+    }catch (\Exception $e) {
+        return response()->json([
+            'status' => false,
+            'error' => 'Something went wrong',
+            'message' => $e->getMessage()
+        ], 500);
+    }
 
 }
 

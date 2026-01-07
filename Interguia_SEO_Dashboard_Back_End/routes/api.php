@@ -13,6 +13,6 @@ Route::get('/user', function (Request $request) {
 
 Route::get('/v1/categories',[CategoryController::class, 'index']);
 Route::get('/v1/items', [ItemController::class, 'index']);
-Route::get('/v1/items/{itemCode}', [ItemController::class, 'itemBySerie']);
 Route::get('/v1/items/{itemCode}/batches', [ItemController::class, 'itemByBatch']);
 Route::get('v1/items/{itemCode}/items', [ItemController::class, 'itemByCategory']);
+Route::get('/v1/items/{itemCode}', [ItemController::class, 'itemBySerie']);
