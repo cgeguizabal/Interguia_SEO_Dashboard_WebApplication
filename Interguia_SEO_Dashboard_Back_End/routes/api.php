@@ -11,7 +11,8 @@ Route::get('/user', function (Request $request) {
 
 
 
-Route::get('/v1/items', [ItemController::class, 'index']);
 Route::get('/v1/categories',[CategoryController::class, 'index']);
-Route::get('/v1/items/{batch}', [ItemController::class, 'itemByBatch']);
-Route::get('/v1/items/serie/{serie}', [ItemController::class, 'itemBySerie']);
+Route::get('/v1/items', [ItemController::class, 'index']);
+Route::get('/v1/items/{itemCode}', [ItemController::class, 'itemBySerie']);
+Route::get('/v1/items/{itemCode}/batches', [ItemController::class, 'itemByBatch']);
+Route::get('v1/items/{itemCode}/items', [ItemController::class, 'itemByCategory']);

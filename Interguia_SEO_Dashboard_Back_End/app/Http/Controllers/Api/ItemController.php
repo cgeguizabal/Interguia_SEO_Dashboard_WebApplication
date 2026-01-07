@@ -86,7 +86,7 @@ class ItemController extends Controller
     }
 }
 
-public function itemByBatch($batch)
+public function itemByBatch($itemCode)
 {
     try {
        
@@ -94,7 +94,7 @@ public function itemByBatch($batch)
             ->leftJoin('OBTN', 'OITM.ItemCode', '=', 'OBTN.ItemCode') // join batch table
             ->leftJoin('UGP1', 'OITM.UgpEntry', '=', 'UGP1.UgpEntry') // join unit group table
             ->leftJoin('OUOM', 'UGP1.UomEntry', '=', 'OUOM.UomEntry') // join unit table
-            ->where('OBTN.DistNumber', $batch) // filter by batch number
+            ->where('OBTN.DistNumber', $itemCode) // filter by batch number
             ->select(
                 'OITM.ItemCode as ItemCodeID',
                 'OITM.ItemName',
@@ -151,55 +151,81 @@ public function itemByBatch($batch)
     }
 }
 
- public function itemBySerie($serie)
+ public function itemBySerie($itemCode)
 {
     try {
         $items = Item::query()
-            ->leftJoin('OBTN', 'OITM.ItemCode', '=', 'OBTN.ItemCode') // batches
-            ->leftJoin('UGP1', 'OITM.UgpEntry', '=', 'UGP1.UgpEntry') // unit groups
-            ->leftJoin('OUOM', 'UGP1.UomEntry', '=', 'OUOM.UomEntry') // units
-            ->where('OITM.ItemCode', $serie)
-            ->select(
-                'OITM.ItemCode as ItemCodeID',
-                'OITM.ItemName',
-                'OITM.OnHand as TotalStock',
-                'OITM.IsCommited',
-                'OITM.OnOrder',
-                'OITM.InvntryUom as InventoryUnit',
-                'OBTN.CreateDate',
-                'OBTN.ExpDate',
-                'OBTN.AbsEntry as NoRecord',
-                'OBTN.DistNumber as BatchNumber',
-                'OBTN.Quantity as BatchStock',
-                'OUOM.UomName as UnitName',
-                'UGP1.AltQty',
-                'UGP1.BaseQty'
-            )
-            ->get()
-            ->groupBy('ItemCodeID')
-            ->map(function($itemGroup) {
-                $first = $itemGroup->first();
-                return [
-                    'ItemCode' => $first->ItemCodeID,
-                    'ItemName' => $first->ItemName,
-                    'TotalStock' => $first->TotalStock,
-                    'InventoryUnit' => $first->InventoryUnit,
-                    'Batches' => $itemGroup->unique('BatchNumber')->values()->map(fn($b) => [
-                        'BatchNumber' => $b->BatchNumber ?? null,
-                        'CreateDate' => $b->CreateDate ?? null,
-                        'ExpDate' => $b->ExpDate ?? null,
-                        'NoRecord' => $b->NoRecord ?? null,
-                        'StockInBatch' => $b->BatchStock ?? 0,
-                    ]),
-                    'Conversions' => $itemGroup->unique('UnitName')->map(fn($c) => [
-                        'UnitName' => $c->UnitName,
-                        'UnitAmount' => $c->AltQty,
-                        'BaseQty' => $c->BaseQty,
-                        'StockInUnit' => $first->TotalStock * ($c->AltQty / $c->BaseQty)
-                    ])
-                ];
-            })
-            ->values();
+    ->leftJoin('OBTN', 'OITM.ItemCode', '=', 'OBTN.ItemCode') // batches
+    ->leftJoin('UGP1', 'OITM.UgpEntry', '=', 'UGP1.UgpEntry') // unit groups
+    ->leftJoin('OUOM', 'UGP1.UomEntry', '=', 'OUOM.UomEntry') // units
+    ->leftJoin('OITW', 'OITM.ItemCode', '=', 'OITW.ItemCode') // warehouse stock
+    ->where('OITM.ItemCode', $itemCode)
+    ->select(
+        'OITM.ItemCode as ItemCodeID',
+        'OITM.ItemName',
+        'OITM.OnHand as TotalStock',
+        'OITM.IsCommited',
+        'OITM.OnOrder',
+        'OITM.InvntryUom as InventoryUnit',
+
+        'OITW.WhsCode',
+        'OITW.OnHand as WarehouseStock',
+
+        'OBTN.CreateDate',
+        'OBTN.ExpDate',
+        'OBTN.AbsEntry as NoRecord',
+        'OBTN.DistNumber as BatchNumber',
+        'OBTN.Quantity as BatchStock',
+
+        'OUOM.UomName as UnitName',
+        'UGP1.AltQty',
+        'UGP1.BaseQty'
+    )
+    ->get()
+    ->groupBy('ItemCodeID')
+    ->map(function ($itemGroup) {
+        $first = $itemGroup->first();
+
+        return [
+            'ItemCode' => $first->ItemCodeID,
+            'ItemName' => $first->ItemName,
+            'TotalStock' => $first->TotalStock,
+            'InventoryUnit' => $first->InventoryUnit,
+
+            'Warehouses' => $itemGroup
+    ->where('WarehouseStock', '>', 0)
+    ->unique('WhsCode')
+    ->values()
+    ->map(fn ($w) => [
+        'WhsCode' => $w->WhsCode,
+        'Stock' => $w->WarehouseStock,
+    ]),
+
+
+            'Batches' => $itemGroup
+                ->unique('BatchNumber')
+                ->values()
+                ->map(fn ($b) => [
+                    'BatchNumber' => $b->BatchNumber ?? null,
+                    'CreateDate' => $b->CreateDate ?? null,
+                    'ExpDate' => $b->ExpDate ?? null,
+                    'NoRecord' => $b->NoRecord ?? null,
+                    'StockInBatch' => $b->BatchStock ?? 0,
+                ]),
+
+            'Conversions' => $itemGroup
+                ->unique('UnitName')
+                ->values()
+                ->map(fn ($c) => [
+                    'UnitName' => $c->UnitName,
+                    'UnitAmount' => $c->AltQty,
+                    'BaseQty' => $c->BaseQty,
+                    'StockInUnit' => $first->TotalStock * ($c->AltQty / $c->BaseQty),
+                ]),
+        ];
+    })
+    ->values();
+
 
         return response()->json([
             'status' => true,
@@ -222,6 +248,11 @@ public function itemByBatch($batch)
     }
 }
 
+public function itemByCategory($itemcCode){
+
+    
+
+}
 
 }
 
