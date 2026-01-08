@@ -154,18 +154,18 @@ public function itemByBatch($itemCode)
  public function itemBySerie($itemCode)
 {
     try {
-        $items = Item::query()
-    ->leftJoin('OBTN', 'OITM.ItemCode', '=', 'OBTN.ItemCode') // batches
-    ->leftJoin('UGP1', 'OITM.UgpEntry', '=', 'UGP1.UgpEntry') // unit groups
-    ->leftJoin('OUOM', 'UGP1.UomEntry', '=', 'OUOM.UomEntry') // units
-    ->leftJoin('OITW', 'OITM.ItemCode', '=', 'OITW.ItemCode') // warehouse stock
+      $items = Item::query() // La tabla OITM es mi base 
+    ->leftJoin('OBTN', 'OITM.ItemCode', '=', 'OBTN.ItemCode') // batches/Lotes
+    ->leftJoin('OUGP', 'OITM.UgpEntry', '=', 'OUGP.UgpEntry') // Grupos de unidades 
+    ->leftJoin('UGP1', 'OUGP.UgpEntry', '=', 'UGP1.UgpEntry') // Conversiones de unidades, unit table de UGP1 para obtener detalles
+    ->leftJoin('OUOM as AltUOM', 'UGP1.UomEntry', '=', 'AltUOM.UomEntry') // alt unit
+    ->leftJoin('OUOM as BaseUOM', 'OUGP.BaseUom', '=', 'BaseUOM.UomEntry') // Unidad base para el grupo de unidades
+    ->leftJoin('OITW', 'OITM.ItemCode', '=', 'OITW.ItemCode') // warehouse stock/ALMACEN
     ->where('OITM.ItemCode', $itemCode)
     ->select(
         'OITM.ItemCode as ItemCodeID',
         'OITM.ItemName',
         'OITM.OnHand as TotalStock',
-        'OITM.IsCommited',
-        'OITM.OnOrder',
         'OITM.InvntryUom as InventoryUnit',
 
         'OITW.WhsCode',
@@ -177,9 +177,10 @@ public function itemByBatch($itemCode)
         'OBTN.DistNumber as BatchNumber',
         'OBTN.Quantity as BatchStock',
 
-        'OUOM.UomName as UnitName',
+        'AltUOM.UomName as AltUnitName',   // conversion unit (SACO, LIBRAS, etc)
         'UGP1.AltQty',
-        'UGP1.BaseQty'
+        'UGP1.BaseQty',
+        'BaseUOM.UomName as BaseUnitName'  // base unit (LBS, KG, etc)
     )
     ->get()
     ->groupBy('ItemCodeID')
@@ -193,14 +194,13 @@ public function itemByBatch($itemCode)
             'InventoryUnit' => $first->InventoryUnit,
 
             'Warehouses' => $itemGroup
-    ->where('WarehouseStock', '>', 0)
-    ->unique('WhsCode')
-    ->values()
-    ->map(fn ($w) => [
-        'WhsCode' => $w->WhsCode,
-        'Stock' => $w->WarehouseStock,
-    ]),
-
+                ->where('WarehouseStock', '>', 0)
+                ->unique('WhsCode')
+                ->values()
+                ->map(fn ($w) => [
+                    'WhsCode' => $w->WhsCode,
+                    'Stock' => $w->WarehouseStock,
+                ]),
 
             'Batches' => $itemGroup
                 ->unique('BatchNumber')
@@ -214,17 +214,22 @@ public function itemByBatch($itemCode)
                 ]),
 
             'Conversions' => $itemGroup
-                ->unique('UnitName')
+                ->unique('AltUnitName')
                 ->values()
-                ->map(fn ($c) => [
-                    'UnitName' => $c->UnitName,
-                    'UnitAmount' => $c->AltQty,
-                    'BaseQty' => $c->BaseQty,
-                    'StockInUnit' => $first->TotalStock * ($c->AltQty / $c->BaseQty),
+                ->map(fn($c) => [
+                    'UnitName' => $c->AltUnitName,           // SACO, LIBRAS, KILOS, etc
+                    'UnitAmount' => $c->AltQty,             // usually 1
+                    'BaseUnitName' => $c->BaseUnitName,     // now shows actual base unit
+                    'BaseQty' => $c->BaseQty,               // conversion factor
+                    'StockInUnit' => $first->TotalStock * ($c->BaseQty / $c->AltQty), // real stock in this unit
                 ]),
         ];
     })
     ->values();
+
+
+
+
 
 
         return response()->json([
