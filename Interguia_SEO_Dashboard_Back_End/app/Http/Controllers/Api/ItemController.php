@@ -154,54 +154,76 @@ public function itemByBatch($itemCode)
  public function itemBySerie($itemCode)
 {
     try {
-      $items = Item::query() // La tabla OITM es mi base 
-    ->leftJoin('OBTN', 'OITM.ItemCode', '=', 'OBTN.ItemCode') // batches/Lotes
-    ->leftJoin('OUGP', 'OITM.UgpEntry', '=', 'OUGP.UgpEntry') // Grupos de unidades 
-    ->leftJoin('UGP1', 'OUGP.UgpEntry', '=', 'UGP1.UgpEntry') // Conversiones de unidades, unit table de UGP1 para obtener detalles
-    ->leftJoin('OUOM as AltUOM', 'UGP1.UomEntry', '=', 'AltUOM.UomEntry') // alt unit
-    ->leftJoin('OUOM as BaseUOM', 'OUGP.BaseUom', '=', 'BaseUOM.UomEntry') // Unidad base para el grupo de unidades
-    ->leftJoin('OITW', 'OITM.ItemCode', '=', 'OITW.ItemCode') // warehouse stock/ALMACEN
-    ->where('OITM.ItemCode', $itemCode)
+      $items = Item::query() // La tabla OITM es mi base
+    ->leftJoin('OBTN', 'OITM.ItemCode', '=', 'OBTN.ItemCode') // batches / lotes
+    ->leftJoin('OUGP', 'OITM.UgpEntry', '=', 'OUGP.UgpEntry') // grupos de unidades
+    ->leftJoin('UGP1', 'OUGP.UgpEntry', '=', 'UGP1.UgpEntry') // conversiones de unidades
+    ->leftJoin('OUOM as AltUOM', 'UGP1.UomEntry', '=', 'AltUOM.UomEntry') // unidad alternativa
+    ->leftJoin('OUOM as BaseUOM', 'OUGP.BaseUom', '=', 'BaseUOM.UomEntry') // unidad base
+    ->leftJoin('OITW', 'OITM.ItemCode', '=', 'OITW.ItemCode') // stock por almacén
+    ->leftJoin('OWHS', 'OWHS.WhsCode', '=', 'OITW.WhsCode') // Tabla donde estan los nombres de Almacenes
+    ->where('OITM.ItemCode', $itemCode) // Busca el Articulo segun ID
     ->select(
-        'OITM.ItemCode as ItemCodeID',
-        'OITM.ItemName',
-        'OITM.OnHand as TotalStock',
-        'OITM.InvntryUom as InventoryUnit',
 
-        'OITW.WhsCode',
-        'OITW.OnHand as WarehouseStock',
+        //Datos de tabla base de inventario
+        'OITM.ItemCode as ItemCodeID', // ID/Numero de serie de Articulo
+        'OITM.ItemName', // Nombre de Item/Articulo
+        'OITM.OnHand as TotalStock', // Total de articulo en unidad base dentro inventario
+        'OITM.InvntryUom as InventoryUnit', // Nombre del grupo de unidad
 
-        'OBTN.CreateDate',
-        'OBTN.ExpDate',
-        'OBTN.AbsEntry as NoRecord',
-        'OBTN.DistNumber as BatchNumber',
-        'OBTN.Quantity as BatchStock',
+        //Almacen
+        'OITW.WhsCode', // ID de Almancen
+        'OWHS.WhsName as WarehouseName', //Nombre del Almacen
+        'OITW.OnHand as WarehouseStock', // Total de articulo en unidad base dentro de este almacen
+        
+        //LOTES
+        'OBTN.CreateDate', // Fecha en que se creo
+        'OBTN.ExpDate', // Fecha en que expira
+        'OBTN.AbsEntry as NoRecord', // Numero de registro
+        'OBTN.DistNumber as BatchNumber', // Numero de lote
+        'OBTN.Quantity as BatchStock', //Cantidad de ese producto en lote
 
-        'AltUOM.UomName as AltUnitName',   // conversion unit (SACO, LIBRAS, etc)
-        'UGP1.AltQty',
-        'UGP1.BaseQty',
-        'BaseUOM.UomName as BaseUnitName'  // base unit (LBS, KG, etc)
+        //Conversiones
+        'AltUOM.UomName as AltUnitName', //Nombre de unidad
+        'UGP1.AltQty', // Cantidad base de unidad, siempre es 1
+        'UGP1.BaseQty', // Equivalencia de la unidad en la unidad base, por ejemplo, 1 Tonelada = 2204.620000lb
+        'BaseUOM.UomName as BaseUnitName' // Nombre de unidad base, ejemplo Libras
     )
     ->get()
     ->groupBy('ItemCodeID')
     ->map(function ($itemGroup) {
+
+        //First es la primera fila de todo el grupo que se formo
         $first = $itemGroup->first();
 
+        // Conversión de la unidad de inventario (ej: SACO) a la unidad base
+        $inventoryConversion = $itemGroup
+            ->firstWhere('AltUnitName', $first->InventoryUnit);
+
+        $inventoryBaseQty = ($inventoryConversion->BaseQty ?? 1); // Obtengo la conversion de la unidad base a la unidad de este grupo
+
+        $totalStock = $first->TotalStock; // El total de articulos en la unidad de inventario/grupo, ejemplo saco
+
         return [
+            //ARTICULO CON UNIDAD PRINCIPAL
             'ItemCode' => $first->ItemCodeID,
             'ItemName' => $first->ItemName,
             'TotalStock' => $first->TotalStock,
             'InventoryUnit' => $first->InventoryUnit,
 
+            //ALMACENES
             'Warehouses' => $itemGroup
                 ->where('WarehouseStock', '>', 0)
                 ->unique('WhsCode')
                 ->values()
                 ->map(fn ($w) => [
                     'WhsCode' => $w->WhsCode,
+                    'Warehouse' =>$w->WarehouseName,
                     'Stock' => $w->WarehouseStock,
+
                 ]),
 
+            //LOTES
             'Batches' => $itemGroup
                 ->unique('BatchNumber')
                 ->values()
@@ -213,19 +235,28 @@ public function itemByBatch($itemCode)
                     'StockInBatch' => $b->BatchStock ?? 0,
                 ]),
 
+
+            //CONVERSIONES
             'Conversions' => $itemGroup
                 ->unique('AltUnitName')
                 ->values()
-                ->map(fn($c) => [
-                    'UnitName' => $c->AltUnitName,           // SACO, LIBRAS, KILOS, etc
-                    'UnitAmount' => $c->AltQty,             // usually 1
-                    'BaseUnitName' => $c->BaseUnitName,     // now shows actual base unit
-                    'BaseQty' => $c->BaseQty,               // conversion factor
-                    'StockInUnit' => $first->TotalStock * ($c->BaseQty / $c->AltQty), // real stock in this unit
-                ]),
+                ->map(function ($c) use ($inventoryBaseQty, $totalStock) {
+
+                    return [
+                        'UnitName' => $c->AltUnitName,
+                        'UnitAmount' => $c->AltQty,
+                        'BaseUnitName' => $c->BaseUnitName,
+                        'BaseQty' => $c->BaseQty,
+
+                        // TotalStock * (UNIDAD MAS PEQUENA por Unidad principal) / (UNIDAD MAS PEQUENA por unidad)
+                        'StockInUnit' => $totalStock * $inventoryBaseQty / $c->BaseQty,
+
+                    ];
+                }),
         ];
     })
     ->values();
+
 
 
 
