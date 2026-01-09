@@ -164,7 +164,7 @@ public function itemByBatch($itemCode)
     ->leftJoin('OUOM as BaseUOM', 'OUGP.BaseUom', '=', 'BaseUOM.UomEntry') // unidad base
     ->leftJoin('OITW', 'OITM.ItemCode', '=', 'OITW.ItemCode') // stock por almacén
     ->leftJoin('OWHS', 'OWHS.WhsCode', '=', 'OITW.WhsCode') // Tabla donde estan los nombres de Almacenes
-    ->where('OITM.ItemCode', $itemCode) // Busca el Articulo segun ID
+    ->where('OITM.ItemCode', $itemCode) // Busca el Articulo segun ID Other/Non-inventory
     ->select(
 
         //Datos de tabla base de inventario
@@ -172,6 +172,7 @@ public function itemByBatch($itemCode)
         'OITM.ItemName', // Nombre de Item/Articulo
         'OITM.OnHand as TotalStock', // Total de articulo en unidad base dentro inventario
         'OITM.InvntryUom as InventoryUnit', // Nombre del grupo de unidad
+        'OITM.ItemType as ItemType', //Tipo de articulo, tenemos Servicios, productos fisicos y Other/Non-inventory
 
         //Almacen
         'OITW.WhsCode', // ID de Almancen
@@ -206,12 +207,25 @@ public function itemByBatch($itemCode)
 
         $totalStock = $first->TotalStock; // El total de articulos en la unidad de inventario/grupo, ejemplo saco
 
+        $itemType = function() use($first){ // Funcion que define el tipo de inventario
+            if($first->ItemType = 'I'){ 
+                return 'Articulo';
+            } else if($first->ItemType = 'S'){
+                return 'Servicio';
+            } else{
+                return 'Otros';
+            };
+        };
+
+       
+
         return [
             //ARTICULO CON UNIDAD PRINCIPAL
             'ItemCode' => $first->ItemCodeID, //Numero de serie o ID
             'ItemName' => $first->ItemName, // Nombre del articulo
             'TotalStock' => $first->TotalStock, // Total de inventario en la unidad principal en la que fue guardada
             'InventoryUnit' => $first->InventoryUnit, // Unidad en la que fue gurdada
+            'ItemType' => $itemType(), // Tipo de articulo
 
             //ALMACENES
             'Warehouses' => $itemGroup
