@@ -151,6 +151,8 @@ public function itemByBatch($itemCode)
     }
 }
 
+
+
  public function itemBySerie($itemCode)
 {
     try {
@@ -189,9 +191,9 @@ public function itemByBatch($itemCode)
         'UGP1.BaseQty', // Equivalencia de la unidad en la unidad base, por ejemplo, 1 Tonelada = 2204.620000lb
         'BaseUOM.UomName as BaseUnitName' // Nombre de unidad base, ejemplo Libras
     )
-    ->get()
-    ->groupBy('ItemCodeID')
-    ->map(function ($itemGroup) {
+    ->get() //Funcion que ejecuta el query
+    ->groupBy('ItemCodeID') // Agrupa por ID
+    ->map(function ($itemGroup) { // map corre loop para ir grupo por grupo
 
         //First es la primera fila de todo el grupo que se formo
         $first = $itemGroup->first();
@@ -206,16 +208,16 @@ public function itemByBatch($itemCode)
 
         return [
             //ARTICULO CON UNIDAD PRINCIPAL
-            'ItemCode' => $first->ItemCodeID,
-            'ItemName' => $first->ItemName,
-            'TotalStock' => $first->TotalStock,
-            'InventoryUnit' => $first->InventoryUnit,
+            'ItemCode' => $first->ItemCodeID, //Numero de serie o ID
+            'ItemName' => $first->ItemName, // Nombre del articulo
+            'TotalStock' => $first->TotalStock, // Total de inventario en la unidad principal en la que fue guardada
+            'InventoryUnit' => $first->InventoryUnit, // Unidad en la que fue gurdada
 
             //ALMACENES
             'Warehouses' => $itemGroup
-                ->where('WarehouseStock', '>', 0)
-                ->unique('WhsCode')
-                ->values()
+                ->where('WarehouseStock', '>', 0) // Si no hay articulos en ese inventario no obtendre informacion de ese almacen
+                ->unique('WhsCode') // El numero de lote siempre sera unico
+                ->values() // Transforma el array asociativo a array indexado
                 ->map(fn ($w) => [
                     'WhsCode' => $w->WhsCode,
                     'Warehouse' =>$w->WarehouseName,
@@ -225,8 +227,8 @@ public function itemByBatch($itemCode)
 
             //LOTES
             'Batches' => $itemGroup
-                ->unique('BatchNumber')
-                ->values()
+                ->unique('BatchNumber') // El numero de lote siempre sera unico
+                ->values() // Transforma el array asociativo a array indexado
                 ->map(fn ($b) => [
                     'BatchNumber' => $b->BatchNumber ?? null,
                     'CreateDate' => $b->CreateDate ?? null,
@@ -239,27 +241,23 @@ public function itemByBatch($itemCode)
             //CONVERSIONES
             'Conversions' => $itemGroup
                 ->unique('AltUnitName')
-                ->values()
+                ->values() // Transforma el array asociativo a array indexado
                 ->map(function ($c) use ($inventoryBaseQty, $totalStock) {
 
                     return [
-                        'UnitName' => $c->AltUnitName,
-                        'UnitAmount' => $c->AltQty,
-                        'BaseUnitName' => $c->BaseUnitName,
-                        'BaseQty' => $c->BaseQty,
+                        'UnitName' => $c->AltUnitName, // Unidad de conversion (Ej.Toneladas)
+                        'UnitAmount' => $c->AltQty, // Cantidad de unidad de conversion
+                        'BaseUnitName' => $c->BaseUnitName, // Unidad base (Ej.Libras)
+                        'BaseQty' => $c->BaseQty, // Valor de Unidad de conversion a unidad base (Ej.valor de toneladas a libras)
 
-                        // TotalStock * (UNIDAD MAS PEQUENA por Unidad principal) / (UNIDAD MAS PEQUENA por unidad)
+                        // TotalStock * (Valor de unidad(Ej.Toneladas) en la unidad mas pequena(Ej. Libras)) / (Total de unidad a convertir(Ej.Toneladas) en unidad mas pequena(Ej. Libras)
                         'StockInUnit' => $totalStock * $inventoryBaseQty / $c->BaseQty,
 
                     ];
                 }),
         ];
     })
-    ->values();
-
-
-
-
+    ->values(); // Transforma el array asociativo a array indexado
 
 
 
@@ -283,6 +281,9 @@ public function itemByBatch($itemCode)
         ], 500);
     }
 }
+
+
+
 
 public function itemByCategory($itemcCode){
 
@@ -321,6 +322,9 @@ public function itemByCategory($itemcCode){
     }
 
 }
+
+//PEDIENTE FUNCION PUBLICA PARA OBTENER INVENTARIO POR ID DE CLIENTE
+
 
 }
 
