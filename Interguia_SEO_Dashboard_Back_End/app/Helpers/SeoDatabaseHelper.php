@@ -14,7 +14,7 @@ class SeoDatabaseHelper
         // Conexion a la base de datos master para crear nuevas bases de datos
         Config::set('database.connections.sqlsrv_master', [
             'driver' => 'sqlsrv',
-            'host' => $host,
+            'host' => $host, 
             'port' => $port,
             'database' => 'master',
             'username' => $username,
@@ -57,13 +57,15 @@ class SeoDatabaseHelper
      */
     public static function loadSavedConnections()
     {
-        $path = storage_path('app/seo_db.json');
+        $path = storage_path('app/seo_db.json'); // Ruta del archivo donde se guardan las credenciales
 
-        if (!File::exists($path)) {
+        if (!File::exists($path)) { // Si el archivo no existe, retorna false
             return false;
         }
 
-        $data = json_decode(File::get($path), true);
+        $data = json_decode(File::get($path), true); // Lee y decodifica el archivo JSON
+
+         // Define las conexiones usando las credenciales guardadas
 
         self::setSeoConnections(
             $data['host'],

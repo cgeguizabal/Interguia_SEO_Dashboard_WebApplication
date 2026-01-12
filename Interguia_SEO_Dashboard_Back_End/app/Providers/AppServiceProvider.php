@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Helpers\SeoDatabaseHelper;
 use Illuminate\Support\Facades\DB;
 
 class AppServiceProvider extends ServiceProvider
@@ -20,5 +21,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-       DB::setDefaultConnection('sqlsrv_app');    }
+        SeoDatabaseHelper::loadSavedConnections(); // Al iniciar la app esto corre y verifica si hay credenciales guardadas y conecta si es asi
     }
+}

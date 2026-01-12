@@ -122,5 +122,11 @@ return [
         'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
+    
 
+    'seo_db' => [
+        'loaded' => false, // Indica si las credenciales han sido cargadas
+    ],
 ];
+
+

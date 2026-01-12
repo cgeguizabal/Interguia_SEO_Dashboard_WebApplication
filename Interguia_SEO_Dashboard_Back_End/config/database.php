@@ -114,7 +114,7 @@ return [
         ],
 
         // Conexion temporar a para crear la base de datos de la SER_dashboard. Esto solo se usa en el comando artisan para crear la base de datos. Datos se configuran dinamicamente.
-    'sqlsrv_master' => [
+    'sqlsrv_master' => [ 
     'driver' => 'sqlsrv',
     'host' => '',
     'port' => '',
