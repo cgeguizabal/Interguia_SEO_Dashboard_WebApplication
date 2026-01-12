@@ -113,25 +113,25 @@ return [
             'trust_server_certificate' => env('DB_TRUST_SERVER_CERTIFICATE', 'true'),
         ],
 
-        // Conexion temporar a para crear la base de datos de la SER_dashboard. Esto solo se usa en el comando artisan para crear la base de datos.
-    'sqlsrv_master' => [ //Correr comando php artisan app:create-seo-data-base
-        'driver' => 'sqlsrv',
-        'host' => env('APP_DB_HOST', '127.0.0.1'),
-        'port' => env('DB_PORT', '1433'),
-        'database' => 'master', 
-        'username' => env('APP_DB_USERNAME', 'sa'), 
-        'password' => env('APP_DB_PASSWORD', '14051997'),
-        'trust_server_certificate' => true,
-    ],
+        // Conexion temporar a para crear la base de datos de la SER_dashboard. Esto solo se usa en el comando artisan para crear la base de datos. Datos se configuran dinamicamente.
+    'sqlsrv_master' => [
+    'driver' => 'sqlsrv',
+    'host' => '',
+    'port' => '',
+    'database' => 'master',
+    'username' => '',
+    'password' => '',
+    'trust_server_certificate' => true,
+],
 
-    // Conexion para SEO_app database. Esta se usa para manipular los datos de la aplicacion.
+    // Conexion para SEO_app database. Esta se usa para manipular los datos de la aplicacion. Datos se configuran dinamicamente.
 'sqlsrv_app' => [
     'driver' => 'sqlsrv',
-    'host' => env('APP_DB_HOST', '127.0.0.1'),
-    'port' => env('APP_DB_PORT', '1433'), 
-    'database' => env('APP_DB_DATABASE', 'SEO_Dashboard'),
-    'username' => env('APP_DB_USERNAME', 'sa'),
-    'password' => env('APP_DB_PASSWORD', '14051997'),
+    'host' => '',        
+    'port' => '',        
+    'database' => '',
+    'username' => '',
+    'password' => '',
     'charset' => 'utf8',
     'prefix' => '',
     'prefix_indexes' => true,
