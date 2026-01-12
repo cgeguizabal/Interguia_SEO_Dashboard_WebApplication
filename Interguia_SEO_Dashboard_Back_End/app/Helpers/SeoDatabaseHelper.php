@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\File;
 
 class SeoDatabaseHelper
 {
+
     // Define las conexiones de base de datos SEO_dashboard y sqlsrv_master
     public static function setSeoConnections($host, $port, $username, $password, $database) //Argumentos a recibir en la funcion
     {
@@ -52,9 +53,8 @@ class SeoDatabaseHelper
         File::put(storage_path('app/seo_db.json'), json_encode($data, JSON_PRETTY_PRINT));
     }
 
-    /**
-     * Load saved credentials and set connections automatically.
-     */
+
+   // Carga las credenciales guardadas y define las conexiones
     public static function loadSavedConnections()
     {
         $path = storage_path('app/seo_db.json'); // Ruta del archivo donde se guardan las credenciales
