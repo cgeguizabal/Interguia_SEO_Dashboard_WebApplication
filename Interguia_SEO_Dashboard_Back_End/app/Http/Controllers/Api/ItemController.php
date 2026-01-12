@@ -503,13 +503,13 @@ public function itemByBatch($itemCode)
 
 
 //METODO obtener Articulos por categoria
-public function itemByCategory($itemcCode){
-
+public function itemByCategory($itemcCode)
+{
     try{
 
 
-        $items = Item::query()->leftJoin('OITB', 'OITM.ItmsGrpCod', '=', 'OITB.ItmsGrpCod')
-        ->where('OITM.ItmsGrpCod', $itemcCode)
+        $items = Item::query()->leftJoin('OITB', 'OITM.ItmsGrpCod', '=', 'OITB.ItmsGrpCod') // tabla de categorias
+        ->where('OITM.ItmsGrpCod', $itemcCode) // filtrar por category code
         ->select('OITM.ItemCode as ItemCodeID',
         'OITM.ItemName',)->get();
 
