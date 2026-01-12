@@ -10,7 +10,9 @@ class SapDatabaseController extends Controller
 {
    public function setup(Request $request)
     {
-        // Validate input
+
+    try{
+ // Validate input
         $data = $request->validate([
             'host' => 'required|string',
             'port' => 'required|integer',
@@ -31,5 +33,10 @@ class SapDatabaseController extends Controller
         return response()->json(['message' => "SAP Database connection settings saved successfully."]);
 
        
+
+    }catch(\Exception $e){
+        return response()->json(['error' => 'Failed to set SAP Database connection: ' . $e->getMessage()], 500);
+       
+    }
     }
 }

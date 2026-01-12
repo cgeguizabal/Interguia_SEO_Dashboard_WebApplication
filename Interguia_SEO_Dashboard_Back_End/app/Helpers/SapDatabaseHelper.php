@@ -10,54 +10,55 @@ class SapDatabaseHelper
 {
     public static function setSapDatabase($host, $port, $username, $password, $database)
     {
-        Config::set('database.connections.sqlsrv', [
-            'driver' => 'sqlsrv',
-            'host' => $host,
-            'port' => $port,
-            'database' => $database,
-            'username' => $username,
-            'password' => $password,
-            'charset' => 'utf8',
-            'prefix' => '',
-            'prefix_indexes' => true,
-            'encrypt' => 'no',
-            'trust_server_certificate' => true,
-        ]);
+        try {
+            Config::set('database.connections.sqlsrv', [
+                'driver' => 'sqlsrv',
+                'host' => $host,
+                'port' => $port,
+                'database' => $database,
+                'username' => $username,
+                'password' => $password,
+                'charset' => 'utf8',
+                'prefix' => '',
+                'prefix_indexes' => true,
+                'encrypt' => 'no',
+                'trust_server_certificate' => true,
+            ]);
 
-        // Save SAP credentials
-        $data = compact('host', 'port', 'username', 'password', 'database');
-        File::put(storage_path('app/sap_db.json'), json_encode($data, JSON_PRETTY_PRINT));
+            // Guarda SAP credentials
+            $data = compact('host', 'port', 'username', 'password', 'database');
+            File::put(storage_path('app/sap_db.json'), json_encode($data, JSON_PRETTY_PRINT));
+
+            return true;
+        } catch (\Exception $e) {
+            return false; 
+        }
     }
 
     public static function loadSavedConnections()
     {
-        $path = storage_path('app/sap_db.json'); // Correct file
-
-        if (!File::exists($path)) {
-            return false;
-        }
-
-        $data = json_decode(File::get($path), true);
-
-        self::setSapDatabase(
-            $data['host'],
-            $data['port'],
-            $data['username'],
-            $data['password'],
-            $data['database']
-        );
-
-        return true;
-    }
-
-    public static function testConnection()
-    {
         try {
-            DB::connection('sqlsrv')->getPdo();
-            return true;
+            $path = storage_path('app/sap_db.json'); 
+
+            if (!File::exists($path)) {
+                return false;
+            }
+
+            $data = json_decode(File::get($path), true);
+
+            if (!isset($data['host'], $data['port'], $data['username'], $data['password'], $data['database'])) {
+                return false;
+            }
+
+            return self::setSapDatabase(
+                $data['host'],
+                $data['port'],
+                $data['username'],
+                $data['password'],
+                $data['database']
+            );
         } catch (\Exception $e) {
-            return $e->getMessage();
+            return false;
         }
     }
 }
-
