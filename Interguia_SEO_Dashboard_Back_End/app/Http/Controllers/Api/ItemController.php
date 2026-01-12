@@ -270,7 +270,7 @@ public function itemByBatch($itemCode)
             'ItemType' => $itemType(), // Tipo de articulo
             'Commited' => $first->Commited,
             'Ordered' => $first->Ordered,
-            "Available" => $availability,
+            "Available" => $availability, //disponibilidad
 
             //ALMACENES
             'Warehouses' => $itemGroup
