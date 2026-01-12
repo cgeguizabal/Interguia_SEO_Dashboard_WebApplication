@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\ItemController;
 use App\Http\Controllers\api\BatchController;
+use App\Http\Controllers\api\WarehouseController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -18,4 +19,5 @@ Route::get('/v1/items/{whsCode}/warehouse', [ItemController::class, 'itemByWareh
 Route::get('/v1/items/{itemCode}/batches', [ItemController::class, 'itemByBatch']);
 Route::get('v1/items/{itemCode}/items', [ItemController::class, 'itemByCategory']);
 Route::get('/v1/items/{itemCode}', [ItemController::class, 'itemBySerie']);
-Route::get('/v1/batches', [\App\Http\Controllers\api\BatchController::class, 'index']);
+Route::get('/v1/batches', [BatchController::class, 'index']);
+Route::get('/v1/warehouses', [WarehouseController::class, 'index']);
