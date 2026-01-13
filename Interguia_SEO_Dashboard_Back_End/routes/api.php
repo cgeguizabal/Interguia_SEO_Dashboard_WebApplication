@@ -17,6 +17,7 @@ Route::get('/user', function (Request $request) {
 
 
 
+// Endpoints para obtener datos de categorías, ítems/articulos, lotes y almacenes
 Route::get('/v1/categories',[CategoryController::class, 'index']);
 Route::get('/v1/items', [ItemController::class, 'index']);
 Route::get('/v1/items/{whsCode}/warehouse', [ItemController::class, 'itemByWarehouse']);
@@ -25,5 +26,8 @@ Route::get('v1/items/{itemCode}/items', [ItemController::class, 'itemByCategory'
 Route::get('/v1/items/{itemCode}', [ItemController::class, 'itemBySerie']);
 Route::get('/v1/batches', [BatchController::class, 'index']);
 Route::get('/v1/warehouses', [WarehouseController::class, 'index']);
+
+
+// Endpoints para configurar bases de datos SEO y SAP
 Route::post('/v1/seo-database', [SeoDatabaseController::class, 'setup']);
 Route::post('/v1/sap-database', [SapDatabaseController::class, 'setup']);
