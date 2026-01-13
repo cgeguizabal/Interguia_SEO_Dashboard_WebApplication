@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\SeoDatabaseHelper;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Artisan;
 
 class SeoDatabaseController extends Controller
 {
@@ -44,7 +46,30 @@ class SeoDatabaseController extends Controller
             // Crea database
             DB::connection('sqlsrv_master')->statement("CREATE DATABASE [{$data['database']}]");
 
-            return response()->json(['message' => "Database '{$data['database']}' created successfully."]);
+
+            //Crea migraciones iniciales, mis tablas de usuarios, users_roles, roles, etc
+            Artisan::call('migrate',[
+                '--database' => 'sqlsrv_app',
+                '--force' => true
+            ]);
+
+            // Crear roles iniciales
+$roles = ['SuperAdmin', 'Admin', 'Employee'];
+foreach ($roles as $roleName) {
+    DB::connection('sqlsrv_app')->table('roles')->updateOrInsert(
+        ['name' => $roleName],
+        [
+            'description' => $roleName . ' role',
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ]
+    );
+}
+
+            $migrateOutput = Artisan::output();
+
+            return response()->json(['message' => "Database '{$data['database']}' created successfully.",
+                                     'migrate_output' => $migrateOutput]);
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
