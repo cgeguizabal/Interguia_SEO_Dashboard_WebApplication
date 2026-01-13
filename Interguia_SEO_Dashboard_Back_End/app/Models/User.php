@@ -6,11 +6,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Role;
+use Laravel\Sanctum\HasApiTokens;
+
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -32,6 +35,12 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+
+    //Relacion con la tabla de roles (muchos a muchos)
+    public function roles(){
+        return $this->belongsToMany(Role::class, 'user_roles', 'user_id', 'role_id');
+    }
 
     /**
      * Get the attributes that should be cast.
