@@ -6,7 +6,7 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Role;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Hash; // Para hashear contraseñas
 
 class AuthController extends Controller
 {
@@ -55,6 +55,8 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+
+    try{
         $data = $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string'
@@ -74,18 +76,34 @@ class AuthController extends Controller
             'token_type' => 'Bearer',
             'user' => new UserResource($user),
         ]);
+    }catch(\Exception $e){
+          return response()->json([
+            'status' => false,
+            'error' => 'Login failed',
+            'message' => $e->getMessage()
+
+                 ], 500);}
+        
     }
 
     public function logout(Request $request)
     {
+        try{
+
+        // Revoca el token de acceso actual
         $request->user()->currentAccessToken()->delete();
 
+        // Respuesta de éxito
         return response()->json(['message' => 'Logged out']);
+
+        }catch(\Exception $e){
+          return response()->json([
+            'status' => false,
+            'error' => 'Logout failed',
+            'message' => $e->getMessage()
+
+                 ], 500);}
+        
     }
 
-    public function me(Request $request)
-    {
-        $user = $request->user()->load('roles');
-    return response()->json(new UserResource($user));
-    }
 }
