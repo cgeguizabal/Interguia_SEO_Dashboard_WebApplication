@@ -30,7 +30,7 @@ class AuthController extends Controller
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']), // Hashea la contraseña
-            'must_change_password' => false
+            'must_change_password' => 0
         ]);
 
         $roleIds = Role::whereIn('name', $data['roles'])->pluck('id')->toArray(); // Obtiene los IDs de los roles seleccionados
