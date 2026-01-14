@@ -5,15 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Helpers\SeoDatabaseHelper;
+use App\Models\Role;
+use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Hash;
 
 class SeoDatabaseController extends Controller
 {
     public function setup(Request $request)
     {
         try {
-            // Validate input
+            // Valida datos de conexión
             $data = $request->validate([
                 'host' => 'required|string',
                 'port' => 'required|integer',
@@ -69,7 +72,37 @@ foreach ($roles as $roleName) {
     );
 }
 
+
+// Crear usuario Super Admin inicial
+$superAdminEmail = 'interguia@gmail.com';
+
+// Evita duplicados si el endpoint se llama otra vez
+$superAdmin = User::on('sqlsrv_app')->where('email', $superAdminEmail)->first();
+
+if (!$superAdmin) {
+    $superAdmin = User::on('sqlsrv_app')->create([
+        'name' => 'Super Admin',
+        'email' => $superAdminEmail,
+        'password' => Hash::make('SuperAdmin123'), 
+        'created_at' => Carbon::now(),
+        'updated_at' => Carbon::now(),
+    ]);
+}
+
+// Asigna rol de SuperAdmin al usuario creado
+$superAdminRole = Role::on('sqlsrv_app')
+    ->where('name', 'Interguia_SEO_Dashboard_SuperAdmin')
+    ->first();
+
+if ($superAdminRole && !$superAdmin->roles()->where('roles.id', $superAdminRole->id)->exists()) {
+    $superAdmin->roles()->attach($superAdminRole->id);
+}
+
+
+
             $migrateOutput = Artisan::output(); // Captura la salida de la migración
+
+
 
             return response()->json(['message' => "Database '{$data['database']}' created successfully.", // y paso la salida de la migración
                                      'migrate_output' => $migrateOutput]); 
