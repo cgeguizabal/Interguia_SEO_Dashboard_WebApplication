@@ -59,17 +59,20 @@ foreach ($roles as $roleName) {
     DB::connection('sqlsrv_app')->table('roles')->updateOrInsert(
         ['name' => $roleName],
         [
-            'description' => $roleName . ' role',
+            // Genera descripción basada en el nombre del rol, y ocupo operador ternario para simplificar
+         'description' => $roleName . ($roleName === 'Admin' 
+         ? 'Can edit users' 
+         : ($roleName !== 'Employee' ? ' with full access' : ' with view only access')),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]
     );
 }
 
-            $migrateOutput = Artisan::output();
+            $migrateOutput = Artisan::output(); // Captura la salida de la migración
 
-            return response()->json(['message' => "Database '{$data['database']}' created successfully.",
-                                     'migrate_output' => $migrateOutput]);
+            return response()->json(['message' => "Database '{$data['database']}' created successfully.", // y paso la salida de la migración
+                                     'migrate_output' => $migrateOutput]); 
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
