@@ -33,11 +33,17 @@ Route::middleware('auth:sanctum')->group(function () { // Protege rutas con aute
         Route::delete('/v1/users/{user}', [UserController::class, 'destroy']);
 
         Route::post('/v1/register', [AuthController::class, 'register']); //Necesitas permisos para crear usuarios
+
+        // Configurar base de datos SAP
+        Route::post('/v1/sap-database', [SapDatabaseController::class, 'setup']);
+
 });
 
 
 
 // Endpoints para obtener datos de categorías, ítems/articulos, lotes y almacenes
+
+Route::middleware(['auth:sanctum', 'role:Admin,SuperAdmin,Employee'])->group(function () { // Necesitas tener uno de los roles definidos para acceder
 
 // Categories
 Route::get('/v1/categories',[CategoryController::class, 'index']);
@@ -54,6 +60,9 @@ Route::get('/v1/batches', [BatchController::class, 'index']); // Obtener todos l
 Route::get('/v1/warehouses', [WarehouseController::class, 'index']); // Obtener todos los almacenes
 
 
-// Endpoints para configurar bases de datos SEO y SAP
+});
+
+
+
+// Endpoints para configurar bases de datos SEO 
 Route::post('/v1/seo-database', [SeoDatabaseController::class, 'setup']); // Configurar base de datos SEO
-Route::post('/v1/sap-database', [SapDatabaseController::class, 'setup']);// Configurar base de datos SAP
