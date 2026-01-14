@@ -13,18 +13,23 @@ use App\Http\Controllers\AuthController;
 
 
 
-Route::get('/user', function (Request $request) {
-    return $request->user();
-})->middleware('auth:sanctum');
 
 
 // Endpoints de autenticación
 Route::post('/v1/login', [AuthController::class, 'login']); // Login público
 
+Route::middleware('auth:sanctum')->post(
+    '/v1/change-password',
+    [AuthController::class, 'changePassword']
+);
+
+
+
 Route::middleware('auth:sanctum')->group(function () { // Protege rutas con autenticación
     Route::post('/v1/logout', [AuthController::class, 'logout']);
     });
     
+
     // Endpoints para administrar usuarios y roles
     Route::middleware(['auth:sanctum', 'role:Admin,SuperAdmin'])->group(function () { // Necesitas tener uno de los roles definidos para acceder
         Route::get('/v1/users', [UserController::class, 'index']);
