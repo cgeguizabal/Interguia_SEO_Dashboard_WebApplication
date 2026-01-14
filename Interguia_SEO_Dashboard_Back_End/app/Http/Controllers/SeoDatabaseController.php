@@ -94,7 +94,7 @@ if (!$superAdmin) {
         'name' => 'Interguia SuperAdmin',
         'email' => $superAdminEmail,
         'password' => Hash::make($randomPassword), 
-        'must_change_password' => true,
+        'must_change_password' => 1,
         'created_at' => Carbon::now(),
         'updated_at' => Carbon::now(),
     ]);
