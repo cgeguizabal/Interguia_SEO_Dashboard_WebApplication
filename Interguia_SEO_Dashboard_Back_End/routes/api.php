@@ -19,21 +19,23 @@ Route::get('/user', function (Request $request) {
 
 
 // Endpoints de autenticación
-Route::post('/v1/register', [AuthController::class, 'register']);
-Route::post('/v1/login', [AuthController::class, 'login']);
+Route::post('/v1/login', [AuthController::class, 'login']); // Login público
 
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware('auth:sanctum')->group(function () { // Protege rutas con autenticación
     Route::post('/v1/logout', [AuthController::class, 'logout']);
-    Route::get('/v1/me', [AuthController::class, 'me']);
+    });
+    
+    // Endpoints para administrar usuarios y roles
+    Route::middleware(['auth:sanctum', 'role:Admin,SuperAdmin'])->group(function () { // Necesitas tener uno de los roles definidos para acceder
+        Route::get('/v1/users', [UserController::class, 'index']);
+        Route::get('/v1/users/{user}', [UserController::class, 'show']);
+        Route::put('/v1/users/{user}', [UserController::class, 'update']);
+        Route::delete('/v1/users/{user}', [UserController::class, 'destroy']);
+
+        Route::post('/v1/register', [AuthController::class, 'register']); //Necesitas permisos para crear usuarios
 });
 
-// Endpoints para administrar usuarios y roles
-Route::middleware(['auth:sanctum', 'role:Admin'])->group(function () {
-    Route::get('/v1/users', [UserController::class, 'index']);
-    Route::get('/v1/users/{user}', [UserController::class, 'show']);
-    Route::put('/v1/users/{user}', [UserController::class, 'update']);
-    Route::delete('/v1/users/{user}', [UserController::class, 'destroy']);
-});
+
 
 // Endpoints para obtener datos de categorías, ítems/articulos, lotes y almacenes
 
@@ -42,16 +44,16 @@ Route::get('/v1/categories',[CategoryController::class, 'index']);
 
 // Items
 Route::get('/v1/items', [ItemController::class, 'index']);
-Route::get('/v1/items/{itemCode}/batches', [ItemController::class, 'itemByBatch']);
-Route::get('/v1/items/{itemCode}/items', [ItemController::class, 'itemByCategory']);
-Route::get('/v1/items/{whsCode}/warehouse', [ItemController::class, 'itemByWarehouse']);
-Route::get('/v1/items/{itemCode}', [ItemController::class, 'itemBySerie']);
+Route::get('/v1/items/{itemCode}/batches', [ItemController::class, 'itemByBatch']); // Obtener ítems por lote
+Route::get('/v1/items/{itemCode}/items', [ItemController::class, 'itemByCategory']); // Obtener ítems por categoría
+Route::get('/v1/items/{whsCode}/warehouse', [ItemController::class, 'itemByWarehouse']); // Obtener ítems por almacén
+Route::get('/v1/items/{itemCode}', [ItemController::class, 'itemBySerie']); // Obtener ítems por serie
 
 // Batches y Warehouses
-Route::get('/v1/batches', [BatchController::class, 'index']);
-Route::get('/v1/warehouses', [WarehouseController::class, 'index']);
+Route::get('/v1/batches', [BatchController::class, 'index']); // Obtener todos los lotes
+Route::get('/v1/warehouses', [WarehouseController::class, 'index']); // Obtener todos los almacenes
 
 
 // Endpoints para configurar bases de datos SEO y SAP
-Route::post('/v1/seo-database', [SeoDatabaseController::class, 'setup']);
-Route::post('/v1/sap-database', [SapDatabaseController::class, 'setup']);
+Route::post('/v1/seo-database', [SeoDatabaseController::class, 'setup']); // Configurar base de datos SEO
+Route::post('/v1/sap-database', [SapDatabaseController::class, 'setup']);// Configurar base de datos SAP
