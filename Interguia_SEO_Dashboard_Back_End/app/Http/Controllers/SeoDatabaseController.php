@@ -10,6 +10,8 @@ use App\Models\User;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
+
 
 class SeoDatabaseController extends Controller
 {
@@ -17,7 +19,7 @@ class SeoDatabaseController extends Controller
     {
         try {
             // Valida datos de conexión
-            $data = $request->validate([
+            $data = $request->validate([ // Reglas de validación
                 'host' => 'required|string',
                 'port' => 'required|integer',
                 'username' => 'required|string',
@@ -34,14 +36,17 @@ class SeoDatabaseController extends Controller
                 $data['database']
             );
 
+
+            // Verifica si la configuración fue exitosa
             if (!$success) {
                 return response()->json(['error' => 'Failed to set database connections'], 500);
             }
 
             // Check si existe la base de datos
             $exists = DB::connection('sqlsrv_master')
-                ->select("SELECT name FROM sys.databases WHERE name = ?", [$data['database']]);
+                ->select("SELECT name FROM sys.databases WHERE name = ?", [$data['database']]); // Consulta para verificar existencia
 
+            // Si existe, retorna mensaje
             if (!empty($exists)) {
                 return response()->json(['message' => "Database '{$data['database']}' already exists."]);
             }
@@ -76,14 +81,20 @@ foreach ($roles as $roleName) {
 // Crear usuario Super Admin inicial
 $superAdminEmail = 'interguia@gmail.com';
 
+
+// Genera una contraseña aleatoria de 10 caracteres
+$randomPassword = Str::password(10); 
+
 // Evita duplicados si el endpoint se llama otra vez
 $superAdmin = User::on('sqlsrv_app')->where('email', $superAdminEmail)->first();
 
+// Si no existe, crea el usuario automaticamente
 if (!$superAdmin) {
     $superAdmin = User::on('sqlsrv_app')->create([
-        'name' => 'Super Admin',
+        'name' => 'Interguia SuperAdmin',
         'email' => $superAdminEmail,
-        'password' => Hash::make('SuperAdmin123'), 
+        'password' => Hash::make($randomPassword), 
+        'must_change_password' => true,
         'created_at' => Carbon::now(),
         'updated_at' => Carbon::now(),
     ]);
@@ -91,21 +102,25 @@ if (!$superAdmin) {
 
 // Asigna rol de SuperAdmin al usuario creado
 $superAdminRole = Role::on('sqlsrv_app')
-    ->where('name', 'Interguia_SEO_Dashboard_SuperAdmin')
+    ->where('name', 'SuperAdmin')
     ->first();
 
 if ($superAdminRole && !$superAdmin->roles()->where('roles.id', $superAdminRole->id)->exists()) {
     $superAdmin->roles()->attach($superAdminRole->id);
 }
 
-
-
             $migrateOutput = Artisan::output(); // Captura la salida de la migración
 
+          return response()->json([
+          'message' => "Database '{$data['database']}' created successfully.",
+          'super_admin' => [
+          'email' => $superAdminEmail,
+          'temporary_password' => $randomPassword,
+          'must_change_password' => true
+        ],
+          'migrate_output' => $migrateOutput // Retorna la salida de la migración
+        ]);
 
-
-            return response()->json(['message' => "Database '{$data['database']}' created successfully.", // y paso la salida de la migración
-                                     'migrate_output' => $migrateOutput]); 
         } catch (\Exception $e) {
             return response()->json(['error' => $e->getMessage()], 500);
         }
