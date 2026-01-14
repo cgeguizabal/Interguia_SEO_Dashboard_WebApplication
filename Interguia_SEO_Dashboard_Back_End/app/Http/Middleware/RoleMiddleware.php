@@ -30,7 +30,7 @@ class RoleMiddleware
         if (!$user->roles()->whereIn('name', $roles)->exists()) {
             return response()->json([
                 'status' => false,
-                'message' => 'Forbidden: You do not have the required role'
+                'message' => 'Forbidden: You do not have the required permissions'
             ], 403);
         }
         return $next($request);
