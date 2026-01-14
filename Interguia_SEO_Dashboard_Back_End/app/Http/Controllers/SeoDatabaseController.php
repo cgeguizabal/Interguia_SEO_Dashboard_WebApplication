@@ -69,7 +69,7 @@ foreach ($roles as $roleName) {
         [
             // Genera descripción basada en el nombre del rol, y ocupo operador ternario para simplificar
          'description' => $roleName . ($roleName === 'Admin' 
-         ? 'Can edit users' 
+         ? ' Can edit users' 
          : ($roleName !== 'Employee' ? ' with full access' : ' with view only access')),
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
