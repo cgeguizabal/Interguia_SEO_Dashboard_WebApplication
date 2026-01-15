@@ -39,9 +39,13 @@ Route::middleware('auth:sanctum')->group(function () { // Protege rutas con aute
 
         Route::post('/v1/register', [AuthController::class, 'register']); //Necesitas permisos para crear usuarios
 
-        // Configurar base de datos SAP
-        Route::post('/v1/sap-database', [SapDatabaseController::class, 'setup']);
+        
 
+});
+
+Route::middleware(['auth:sanctum', 'role:SuperAdmin'])->group(function () { 
+    // Configurar base de datos SAP
+        Route::post('/v1/sap-database', [SapDatabaseController::class, 'setup']);
 });
 
 
