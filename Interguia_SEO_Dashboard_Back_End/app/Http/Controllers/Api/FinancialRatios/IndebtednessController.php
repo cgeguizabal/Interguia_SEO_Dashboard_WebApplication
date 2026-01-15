@@ -54,7 +54,7 @@ class IndebtednessController extends Controller
         return response()->json([
             'status' => true,
             'data' => [
-                'date' => $date,
+                'UpToDate' => $date,
                 'percentage_of_assets_financed_with_debt' => $percentage
             ]
         ], 200);

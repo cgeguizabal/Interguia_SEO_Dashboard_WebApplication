@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\FinancialRatios\IndebtednessController;
 use App\Http\Controllers\Api\Inventory\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +24,10 @@ Route::middleware('auth:sanctum')->post(
     [AuthController::class, 'changePassword']
 );
 
+Route::get(
+    '/v1/Indebtedness/{date}',
+    [IndebtednessController::class, 'percentageOfFinancedAssets']
+);
 
 
 Route::middleware('auth:sanctum')->group(function () { // Protege rutas con autenticación
