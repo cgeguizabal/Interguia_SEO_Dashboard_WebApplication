@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Database\QueryException;
 
 
-use App\Models\Item;
+use App\Models\Inventory\Item;
 use Illuminate\Http\Request;
 
 

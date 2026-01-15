@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Inventory;
 
 use App\Http\Controllers\Controller;
-use App\Models\Batch;
+use App\Models\Inventory\Batch;
 use Illuminate\Database\QueryException;
 
 

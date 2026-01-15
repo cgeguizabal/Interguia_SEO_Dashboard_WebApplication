@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Inventory;
 
 use App\Http\Controllers\Controller;
-use App\Models\Warehouse;
+use App\Models\Inventory\Warehouse;
 use Illuminate\Database\QueryException;
 
 

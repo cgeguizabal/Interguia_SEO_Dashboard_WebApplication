@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Inventory;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
+use App\Models\Inventory\Category;
 use Illuminate\Database\QueryException;
 
 class CategoryController extends Controller
