@@ -1,13 +1,13 @@
 <?php
 
-use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\Inventory\CategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\ItemController;
-use App\Http\Controllers\Api\BatchController;
-use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\Api\Inventory\ItemController;
+use App\Http\Controllers\Api\Inventory\BatchController;
+use App\Http\Controllers\Api\Inventory\UserController;
 use App\Http\Controllers\SapDatabaseController;
-use App\Http\Controllers\Api\WarehouseController;
+use App\Http\Controllers\Api\Inventory\WarehouseController;
 use App\Http\Controllers\SeoDatabaseController;
 use App\Http\Controllers\AuthController;
 
