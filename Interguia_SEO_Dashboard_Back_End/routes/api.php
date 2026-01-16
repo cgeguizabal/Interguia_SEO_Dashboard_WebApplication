@@ -82,10 +82,10 @@ Route::post('/v1/seo-database', [SeoDatabaseController::class, 'setup']); // Con
 // Endpoints para ratios financieros - Indebtedness/ endeudamiento
 
 
-Route::post('/v1/Indebtedness/long-term-debt', [IndebtednessController::class, 'getLongTermDebtTotal']);
 
 Route::middleware(['auth:sanctum', 'role:Admin,SuperAdmin,Employee'])->group(function () { // Necesitas tener uno de los roles definidos para acceder    
 
+Route::post('/v1/Indebtedness/long-term-debt', [IndebtednessController::class, 'getLongTermDebtTotal']);
 Route::get('/v1/Indebtedness/liabilityAccounts', [IndebtednessController::class, 'liabilityAccounts']);
 Route::get(
     '/v1/Indebtedness/{date}',
