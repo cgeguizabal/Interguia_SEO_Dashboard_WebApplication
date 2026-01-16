@@ -10,4 +10,7 @@ class FinancialAccounts extends Model
    protected $table ='OACT';
    protected $primaryKey = "AcctCode";
    public $timestamps = false;
+
+   protected $keyType = 'string';   // No todos los primary key son enteros
+    public $incrementing = false;  // Indica que el primary key no es auto-incremental
 }
