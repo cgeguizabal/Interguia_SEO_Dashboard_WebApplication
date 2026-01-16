@@ -1,8 +1,8 @@
 //DISTRIBUCIÓN
 
 
-import DateComplete from "../Components/DateComplete"
-import DistributionStyle from "../styles/components/Distribution.module.scss"
+import DateComplete from "../DateComplete"
+import DistributionStyle from "../../styles/components/Distribution.module.scss"
 
 export default function Distribution() {
   return (

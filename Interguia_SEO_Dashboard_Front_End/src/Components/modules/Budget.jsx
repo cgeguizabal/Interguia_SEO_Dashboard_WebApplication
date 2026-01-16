@@ -1,12 +1,12 @@
 import { useEffect, useRef } from "react";
 import Chart from "chart.js/auto";
 
-import BudgetStyle from "../styles/components/Budget.module.scss";
-import DateMonthYearPicker from "./DateMonthYearPicker";
-import Card_Small_TextRight from "./Charts/Card_Small_TextRight";
-import Card_Small_TextLeft from "./Charts/Card_Small_TextLeft";
-import ComparativeLineChart from "./Charts/ComparativeLineChart";
-import Card_Large from "./Charts/Card_Large";
+import BudgetStyle from "../../styles/components/Budget.module.scss";
+import DateMonthYearPicker from "../DateMonthYearPicker";
+import Card_Small_TextRight from "../Charts/Card_Small_TextRight";
+import Card_Small_TextLeft from "../Charts/Card_Small_TextLeft";
+import ComparativeLineChart from "../Charts/ComparativeLineChart";
+import Card_Large from "../Charts/Card_Large";
 import { FaChartSimple } from "react-icons/fa6";
 
 //ICONS

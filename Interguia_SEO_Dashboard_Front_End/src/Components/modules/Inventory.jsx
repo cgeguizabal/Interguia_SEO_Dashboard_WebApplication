@@ -1,5 +1,5 @@
-import DateComplete from "./DateComplete"
-import InventoryStyle from "../styles/components/Inventory.module.scss"
+import DateComplete from "../DateComplete"
+import InventoryStyle from "../../styles/components/Inventory.module.scss"
 
 export default function Inventory() {
     const ArticleClasses = ["Producto", "Servicio"]

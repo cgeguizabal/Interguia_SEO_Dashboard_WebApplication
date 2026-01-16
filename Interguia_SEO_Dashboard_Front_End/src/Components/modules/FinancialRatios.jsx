@@ -1,12 +1,12 @@
 //RATIOS FINANCIEROS
 
 import { useState } from 'react';
-import FinancialRatiosStyle from '../styles/components/FinancialRatios.module.scss';
-import Liquidity from './FinacialRatiosComponents/Liquidity';
-import Availability from './FinacialRatiosComponents/Availability';
-import Rentability from './FinacialRatiosComponents/Rentability';
-import Efficiency from './FinacialRatiosComponents/Efficiency';
-import Indebtedness from './FinacialRatiosComponents/Indebtedness';
+import FinancialRatiosStyle from '../../styles/components/FinancialRatios.module.scss';
+import Liquidity from '../FinacialRatiosComponents/Liquidity';
+import Availability from '../FinacialRatiosComponents/Availability';
+import Rentability from '../FinacialRatiosComponents/Rentability';
+import Efficiency from '../FinacialRatiosComponents/Efficiency';
+import Indebtedness from '../FinacialRatiosComponents/Indebtedness';
 
 export default function FinancialRatios() {
 

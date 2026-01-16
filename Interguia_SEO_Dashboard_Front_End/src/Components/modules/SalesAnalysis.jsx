@@ -1,8 +1,8 @@
 import { useState } from "react";
-import SalesAnalysisStyle from "../styles/components/SalesAnalysis.module.scss"
-import SectionA from "./SalesAnalysisComponents/SectionA";
-import SectionB from "./SalesAnalysisComponents/SectionB";
-import SectionC from "./SalesAnalysisComponents/SectionC";
+import SalesAnalysisStyle from "../../styles/components/SalesAnalysis.module.scss"
+import SectionA from "../SalesAnalysisComponents/SectionA";
+import SectionB from "../SalesAnalysisComponents/SectionB";
+import SectionC from "../SalesAnalysisComponents/SectionC";
 
 export default function SalesAnalysis() {
 

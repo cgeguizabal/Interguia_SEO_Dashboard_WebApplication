@@ -4,11 +4,11 @@ import SideMenu from '../Components/SideMenu'
 import HomePageStyle from '../styles/pages/Home.module.scss'
 import Welcoming from '../Components/Welcoming';
 import SearchBar from '../Components/SearchBar';
-import Budget from '../Components/Budget';
-import FinancialRatios from '../Components/FinancialRatios';
-import Distribution from '../Components/Distribution';
-import SalesAnalysis from '../Components/SalesAnalysis';
-import Inventory from '../Components/Inventory';
+import Budget from '../Components/modules/Budget';
+import FinancialRatios from '../Components/modules/FinancialRatios';
+import Distribution from '../Components/modules/Distribution';
+import SalesAnalysis from '../Components/modules/SalesAnalysis';
+import Inventory from '../Components/modules/Inventory';
 
 
 
