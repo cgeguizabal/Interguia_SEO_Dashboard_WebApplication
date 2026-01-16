@@ -24,10 +24,7 @@ Route::middleware('auth:sanctum')->post(
     [AuthController::class, 'changePassword']
 );
 
-Route::get(
-    '/v1/Indebtedness/{date}',
-    [IndebtednessController::class, 'percentageOfFinancedAssets']
-);
+
 
 
 Route::middleware('auth:sanctum')->group(function () { // Protege rutas con autenticación
@@ -80,3 +77,19 @@ Route::get('/v1/warehouses', [WarehouseController::class, 'index']); // Obtener 
 
 // Endpoints para configurar bases de datos SEO 
 Route::post('/v1/seo-database', [SeoDatabaseController::class, 'setup']); // Configurar base de datos SEO
+
+
+// Endpoints para ratios financieros - Indebtedness/ endeudamiento
+
+
+Route::post('/v1/Indebtedness/long-term-debt', [IndebtednessController::class, 'getLongTermDebtTotal']);
+
+Route::middleware(['auth:sanctum', 'role:Admin,SuperAdmin,Employee'])->group(function () { // Necesitas tener uno de los roles definidos para acceder    
+
+Route::get('/v1/Indebtedness/liabilityAccounts', [IndebtednessController::class, 'liabilityAccounts']);
+Route::get(
+    '/v1/Indebtedness/{date}',
+    [IndebtednessController::class, 'percentageOfFinancedAssets']
+);
+});
+
